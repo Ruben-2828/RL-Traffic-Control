@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-02-05 09:21:03 by Eclipse SUMO netedit Version 1.19.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Routes -->
+    <route id="r_E2N" edges="E2TL TL2N"/>
+    <route id="r_E2S" edges="E2TL TL2S"/>
+    <route id="r_E2W" edges="E2TL TL2W"/>
+    <route id="r_N2E" edges="N2TL TL2E"/>
+    <route id="r_N2S" edges="N2TL TL2S"/>
+    <route id="r_N2W" edges="N2TL TL2W"/>
+    <route id="r_S2E" edges="S2TL TL2E"/>
+    <route id="r_S2N" edges="S2TL TL2N"/>
+    <route id="r_S2W" edges="S2TL TL2W"/>
+    <route id="r_W2E" edges="W2TL TL2E"/>
+    <route id="r_W2N" edges="W2TL TL2N"/>
+    <route id="r_W2S" edges="W2TL TL2S"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <flow id="f_E2N" begin="0.00" departLane="best" departSpeed="max" route="r_E2N" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_E2S" begin="0.00" departLane="best" departSpeed="max" route="r_E2S" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_E2W" begin="0.00" departLane="best" departSpeed="max" route="r_E2W" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_N2E" begin="0.00" departLane="best" departSpeed="max" route="r_N2E" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_N2S" begin="0.00" departLane="best" departSpeed="max" route="r_N2S" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_N2W" begin="0.00" departLane="best" departSpeed="max" route="r_N2W" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_S2E" begin="0.00" departLane="best" departSpeed="max" route="r_S2E" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_S2N" begin="0.00" departLane="best" departSpeed="max" route="r_S2N" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_S2W" begin="0.00" departLane="best" departSpeed="max" route="r_S2W" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_W2E" begin="0.00" departLane="best" departSpeed="max" route="r_W2E" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_W2N" begin="0.00" departLane="best" departSpeed="max" route="r_W2N" end="100000.00" vehsPerHour="100"/>
+    <flow id="f_W2S" begin="0.00" departLane="best" departSpeed="max" route="r_W2S" end="100000.00" vehsPerHour="100"/>
+</routes>
