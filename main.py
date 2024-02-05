@@ -1,16 +1,71 @@
-# This is a sample Python script.
+import argparse
+import os
+import sys
+from datetime import datetime
 
-# Press Maiusc+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from utils.plotter import Plotter
+
+if "SUMO_HOME" in os.environ:
+    tools = os.path.join(os.environ["SUMO_HOME"], "tools")
+    sys.path.append(tools)
+else:
+    sys.exit("Please declare the environment variable 'SUMO_HOME'")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from sumo_rl import SumoEnvironment
+from sumo_rl.agents import QLAgent
+from sumo_rl.exploration import EpsilonGreedy
 
+'''
+if __name__ == "__main__":
+    out_csv = f"outputs/BI"
+    runs = 5
+    fixed = False   # To run with fixed timing traffic signals
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('RubenEzEzEz')
+    env = SumoEnvironment(
+        net_file="big-intersection/BI.net.xml",
+        route_file="big-intersection/BI_50_test.rou.xml",
+        out_csv_name=out_csv,
+        use_gui=False,
+        num_seconds=100000,
+        min_green=10,
+        max_green=50,
+    )
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for run in range(1, runs + 1):
+        initial_states = env.reset()
+        ql_agents = {
+            ts: QLAgent(
+                starting_state=env.encode(initial_states[ts], ts),
+                state_space=env.observation_space,
+                action_space=env.action_space,
+                alpha=0.1,
+                gamma=0.99,
+                exploration_strategy=EpsilonGreedy(
+                    initial_epsilon=0.05, min_epsilon=0.005, decay=1.0
+                ),
+            )
+            for ts in env.ts_ids
+        }
+
+        done = {"__all__": False}
+        infos = []
+        if fixed:
+            while not done["__all__"]:
+                _, _, done, _ = env.step({})
+        else:
+            while not done["__all__"]:
+                actions = {ts: ql_agents[ts].act() for ts in ql_agents.keys()}
+
+                s, r, done, _ = env.step(action=actions)
+
+                for agent_id in ql_agents.keys():
+                    ql_agents[agent_id].learn(next_state=env.encode(s[agent_id], agent_id), reward=r[agent_id])
+        env.save_csv(out_csv, run)
+        env.close()
+'''
+
+p = Plotter('plots/plot', 'system_mean_waiting_time')
+p.add_csv('outputs')
+p.build_plot()
+p.save_plot()
