@@ -1,25 +1,17 @@
 from os import listdir
 from os.path import isfile, join
-from typing import Literal
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
-Metric = Literal[
-    'system_total_stopped',
-    'system_total_waiting_time',
-    'system_mean_waiting_time',
-    'system_mean_speed'
-]
-
-Titles: dict[Metric, str] = {
+Titles = {
     'system_total_stopped': 'Number of stationary vehicles',
     'system_total_waiting_time': 'Total waiting time',
     'system_mean_waiting_time': 'Mean waiting time',
     'system_mean_speed': 'Mean speed'
 }
 
-Ylabels: dict[Metric, str] = {
+Ylabels = {
     'system_total_stopped': 'Stationary vehicles',
     'system_total_waiting_time': 'Waiting time',
     'system_mean_waiting_time': 'Waiting time',
@@ -36,7 +28,7 @@ labels_font = {
 
 class Plotter:
 
-    def __init__(self, output, metric: Metric, width=3840, height=1080):
+    def __init__(self, output, metric, width=3840, height=1080):
         """
         Plotter builder
         :param output: path to output file
@@ -99,7 +91,7 @@ class Plotter:
         output_file = self.output + '_' + self.metric
         self.fig.savefig(output_file, dpi=96)
 
-    def set_metric(self, metric: Metric) -> None:
+    def set_metric(self, metric) -> None:
         """
         set_metric sets the metric of the plotter
         :param metric: metric to use for plotting data

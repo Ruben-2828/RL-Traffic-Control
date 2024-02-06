@@ -1,5 +1,6 @@
 import os
 import sys
+from scripts.utils.configs_parser import ConfigsParser
 
 from scripts.utils.plotter import Plotter
 
@@ -58,7 +59,10 @@ if __name__ == "__main__":
         env.close()
 '''
 
-p = Plotter('plots/plot', 'system_mean_waiting_time')
-p.add_csv('output')
+p = Plotter('output/plots/plot', 'system_mean_waiting_time')
+p.add_csv('output/csv')
 p.build_plot()
 p.save_plot()
+
+config_parser = ConfigsParser('configs/config_dl.yaml')
+config_parser.parse()
