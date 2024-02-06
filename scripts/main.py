@@ -1,9 +1,7 @@
-import argparse
 import os
 import sys
-from datetime import datetime
 
-from utils.plotter import Plotter
+from scripts.utils.plotter import Plotter
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
@@ -11,14 +9,9 @@ if "SUMO_HOME" in os.environ:
 else:
     sys.exit("Please declare the environment variable 'SUMO_HOME'")
 
-
-from sumo_rl import SumoEnvironment
-from sumo_rl.agents import QLAgent
-from sumo_rl.exploration import EpsilonGreedy
-
 '''
 if __name__ == "__main__":
-    out_csv = f"outputs/BI"
+    out_csv = f"output/BI"
     runs = 5
     fixed = False   # To run with fixed timing traffic signals
 
@@ -66,6 +59,6 @@ if __name__ == "__main__":
 '''
 
 p = Plotter('plots/plot', 'system_mean_waiting_time')
-p.add_csv('outputs')
+p.add_csv('output')
 p.build_plot()
 p.save_plot()
