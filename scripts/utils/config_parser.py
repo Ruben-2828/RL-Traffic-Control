@@ -48,7 +48,8 @@ class ConfigsParser:
         temp_plotter_config = configs['Plotter_settings']
         temp_la_configs = configs['Agent_settings']
 
-        if not (self.plotter_config or self.learning_agents_instances):
+        if not (self.check_plotter_config(temp_plotter_config) and
+                self.check_learning_agents_config(temp_la_configs)):
             raise Exception('bad config file format')
 
         self.plotter_config = temp_plotter_config
@@ -62,10 +63,6 @@ class ConfigsParser:
         """
 
         if 'Output' not in configs:
-            return False
-        if 'Width' not in configs or 'Height' not in configs:
-            return False
-        if configs['Width'] <= 0 or configs['Height'] <= 0:
             return False
         if 'Metrics' not in configs:
             return False

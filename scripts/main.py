@@ -1,8 +1,8 @@
 import os
 import sys
-from scripts.utils.configs_parser import ConfigsParser
+from utils.config_parser import ConfigsParser
 
-from scripts.utils.plotter import Plotter
+from utils.plotter import Plotter
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
@@ -59,10 +59,11 @@ if __name__ == "__main__":
         env.close()
 '''
 
-p = Plotter('output/plots/plot', 'system_mean_waiting_time')
-p.add_csv('output/csv')
-p.build_plot()
-p.save_plot()
-
 config_parser = ConfigsParser('configs/config_dl.yaml')
 config_parser.parse()
+plotter_configs = config_parser.get_plotter_config()
+
+p = Plotter()
+p.set_configs(plotter_configs)
+p.add_csv('output/csv')
+p.build_plot()
