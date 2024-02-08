@@ -53,14 +53,14 @@ def extract_last_iteration_values(csv_files, output_folder):
 if __name__ == "__main__":
     out_csv = f"output/csv/BI_QL"
     yaml_output_folder = f"output/yaml"
-    runs = 2
+    runs = 5
     fixed = False   # To run with fixed timing traffic signals
 
     env = SumoEnvironment(
         net_file="big-intersection/BI.net.xml",
         route_file="big-intersection/BI_50_test.rou.xml",
         out_csv_name=out_csv,
-        use_gui=True,
+        use_gui=False,
         num_seconds=100000,
         min_green=10,
         max_green=50,
