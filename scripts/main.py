@@ -59,7 +59,7 @@ if __name__ == "__main__":
         env.close()
 '''
 
-config_parser = ConfigsParser('configs/config_dl.yaml')
+config_parser = ConfigsParser('configs/config_ql.yaml')
 config_parser.parse()
 plotter_configs = config_parser.get_plotter_config()
 

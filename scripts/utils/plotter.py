@@ -113,3 +113,9 @@ class Plotter:
 
         output_file = self.output + '/plot_' + metric
         fig.savefig(output_file, dpi=96)
+
+    def clear_csv_files(self) -> None:
+        """
+        clear_csv_files clears the csv files in input
+        """
+        self.csv_files = []

@@ -7,7 +7,9 @@ from scripts.utils.config_values import Metric, TrafficType, AgentType
 class ConfigsParser:
     """
     ConfigsParser is used to read configuration files (in yaml format) and
-    to check the config format to avoid errors during learning phase
+    to check the config format to avoid errors during learning phase.
+    It only checks if the mandatory parameters are set, if there are other
+    useless parameters, they won't be considered at all.
     """
 
     def __init__(self, yaml_file):
