@@ -1,0 +1,10 @@
+agents_total_accumulated_waiting_time: 910.0
+agents_total_stopped: 8
+step: 1000.0
+system_mean_speed: 6.914151563603449
+system_mean_waiting_time: 39.56521739130435
+system_total_stopped: 8
+system_total_waiting_time: 910.0
+t_accumulated_waiting_time: 910.0
+t_average_speed: 0.09530256464265086
+t_stopped: 8

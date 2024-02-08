@@ -18,9 +18,9 @@ def objective(trial):
         gamma=gamma_search,
         decay=decay_search,
         fixed=False,
-        seconds=10000,
+        seconds=1000,
         route="big-intersection/BI_50_test.rou.xml",
-        runs=5
+        runs=10
     )
     results = run_simulation(args)
 
@@ -40,7 +40,7 @@ def objective(trial):
     return np.mean(system_mean_speeds), -np.mean(system_mean_waiting_times), -np.mean(system_total_stoppeds), -np.mean(system_total_waiting_times)
 
 def run_simulation(args):
-    subprocess.run(['python', 'main.py', '-a', str(args.alpha), '-g', str(args.gamma), '-d', str(args.decay), '-fixed', str(args.fixed), '-s', str(args.seconds), '-route', str(args.route), '-runs', str(args.runs)])
+    subprocess.run(['python', 'scripts/ql_runner.py', '-a', str(args.alpha), '-g', str(args.gamma), '-d', str(args.decay), '-fixed', str(args.fixed), '-s', str(args.seconds), '-route', str(args.route), '-runs', str(args.runs)])
 
     # Extract from YAML files
     yaml_output_folder = "output/yaml"
@@ -55,14 +55,35 @@ def run_simulation(args):
     return all_last_iteration_values
 
 if __name__ == '__main__':
-    study = optuna.create_study(directions=['maximize', 'minimize', 'minimize', 'minimize'])
-    study.optimize(objective, n_trials=10)
+    study_name = 'ql_hyperparameters_optimization'  
+    study = optuna.create_study(study_name=study_name, directions=['maximize', 'minimize', 'minimize', 'minimize'])
+    study.optimize(objective, n_trials=10) #n_trials = number of hyperparameters combinations
 
-    best_trials = study.best_trials
+    all_trials = study.trials
 
-    print('All best trials:')
-    # Print the best trials truncated to 5 decimal places for readability reasons
-    for idx, best_trial in enumerate(best_trials, start=1):
-        print('Hyperparameters:', {key: round(value, 5) for key, value in best_trial.params.items()})
-        print('Metrics:', {key: round(value, 5) for key, value in dict(zip(['mean_system_mean_speed', 'mean_negative_system_mean_waiting_time', 'mean_negative_system_total_stopped', 'mean_negative_system_total_waiting_time'], best_trial.values)).items()})
+    # Write YAML file
+    yaml_output_path = "configs/config_ql_from_hp-opt.yaml"
+    with open(yaml_output_path, 'w') as yaml_output_file:
+        yaml_output_data = {
+            'Plotter_settings': {
+                'Output': 'output/plots/ql',
+                'Width': 3840,
+                'Height': 1080,
+                'Metrics': ['system_total_stopped', 'system_total_waiting_time', 'system_mean_waiting_time', 'system_mean_speed']
+            },
+            'Agent_settings': {
+                'Traffic_type_training': ['low', 'medium', 'high'],
+                'Instances': {}
+            }
+        }
+        for idx, trial in enumerate(all_trials, start=1):
+            trial_data = {
+                'Alpha': round(trial.params['alpha'], 5),
+                'Gamma': round(trial.params['gamma'], 5),
+                'Decay': round(trial.params['decay'], 5),
+                'Metrics': dict(zip(['system_mean_speed', 'system_mean_waiting_time', 'system_total_stopped', 'system_total_waiting_time'], trial.values))
+            }
+            yaml_output_data['Agent_settings']['Instances'][f'QL_run_{idx}'] = trial_data
+        yaml.dump(yaml_output_data, yaml_output_file, default_flow_style=False)
 
+    print('Results saved to', yaml_output_path)

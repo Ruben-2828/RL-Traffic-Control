@@ -7,7 +7,7 @@ Plotter_settings:
 Agent_settings:
   Traffic_type_training: ['low','medium','high']
   Instances:
-    DL_run_1:
+    QL_run_1:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.1
@@ -15,7 +15,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.99
-    DL_run_2:
+    QL_run_2:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.001
@@ -23,7 +23,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.9995
-    DL_run_3:
+    QL_run_3:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.05
@@ -31,7 +31,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.99999
-    DL_run_4:
+    QL_run_4:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.01
@@ -39,7 +39,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.99
-    DL_run_5:
+    QL_run_5:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.0001
