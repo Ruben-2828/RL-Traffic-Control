@@ -1,5 +1,10 @@
 import os
 import sys
+
+from sumo_rl import SumoEnvironment
+from sumo_rl.agents import QLAgent
+from sumo_rl.exploration import EpsilonGreedy
+
 from utils.config_parser import ConfigsParser
 
 from utils.plotter import Plotter
