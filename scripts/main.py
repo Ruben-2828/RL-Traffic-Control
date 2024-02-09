@@ -1,5 +1,7 @@
 import os
 import sys
+
+from scripts.utils.runner import Runner
 from utils.config_parser import ConfigsParser
 
 from utils.plotter import Plotter
@@ -12,7 +14,7 @@ else:
 
 '''
 if __name__ == "__main__":
-    out_csv = f"output/BI"
+    out_csv = f"output/csv/BI"
     runs = 5
     fixed = False   # To run with fixed timing traffic signals
 
@@ -59,11 +61,19 @@ if __name__ == "__main__":
         env.close()
 '''
 
-config_parser = ConfigsParser('configs/config_ql.yaml')
+config_parser = ConfigsParser('configs/test_ql.yaml')
 config_parser.parse()
 plotter_configs = config_parser.get_plotter_config()
+runner_configs = config_parser.get_runner_config()
+
+r = Runner(runner_configs, None)
+r.run()
 
 p = Plotter()
 p.set_configs(plotter_configs)
-p.add_csv('output/csv')
+p.add_csv('output/csv/ql/low/DL_run_1')
 p.build_plot()
+p.clear_csv_files()
+p.add_csv('output/csv/ql/low/DL_run_2')
+p.build_plot()
+

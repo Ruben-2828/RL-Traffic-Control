@@ -1,23 +1,27 @@
 
+# Frozenset is used to create immutable sets
+
 # Possible metric values for plotting
-Metric = {
+Metric = frozenset({
     'system_total_stopped',
     'system_total_waiting_time',
     'system_mean_waiting_time',
     'system_mean_speed'
-}
+})
 
 # Possible agent types for training models
-AgentType = {
+AgentType = frozenset({
     'FIXED',
     'QL',
     'DQN',
     'SARSA'
-}
+})
 
 # Possible traffic types to train/test models with
-TrafficType = {
+TrafficType = frozenset({
     'low',
     'medium',
     'high'
-}
+})
+
+

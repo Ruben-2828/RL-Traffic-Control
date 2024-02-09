@@ -12,7 +12,7 @@ class ConfigsParser:
     useless parameters, they won't be considered at all.
     """
 
-    def __init__(self, yaml_file):
+    def __init__(self, yaml_file: str):
         """
         ConfigsParser class builder
         :param yaml_file: path to yaml config file
@@ -28,7 +28,7 @@ class ConfigsParser:
         """
         return self.plotter_config
 
-    def get_learning_agents_config(self) -> dict:
+    def get_runner_config(self) -> dict:
         """
         Returns the learning agents configs
         :return: dict representing the learning agents configs
@@ -80,13 +80,16 @@ class ConfigsParser:
         :return: True if learning agents configs are valid, False otherwise
         """
 
-        if 'Traffic_type_training' not in configs:
+        if 'Traffic_type' not in configs:
             return False
-        if not all(item in TrafficType for item in configs['Traffic_type_training']):
-            return False
-        if 'Instances' not in configs:
+        if configs['Traffic_type'] not in TrafficType:
             return False
 
+        if 'Output' not in configs:
+            return False
+
+        if 'Instances' not in configs:
+            return False
         for instance in configs['Instances'].values():
             if 'Agent_type' not in instance:
                 return False

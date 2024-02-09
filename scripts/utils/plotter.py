@@ -4,6 +4,7 @@ from os.path import isfile, join
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from re import split
 
 Titles = {
     'system_total_stopped': 'Number of stationary vehicles',
@@ -96,10 +97,12 @@ class Plotter:
             plt.title(Titles[metric], fontdict=labels_font)
             plt.xlabel('step')
             plt.ylabel(Ylabels[metric])
-            plt.legend(self.csv_files, loc="upper right")
 
             for data in self.df:
                 plt.plot(data.get('step'), data.get(metric))
+
+            # Using regex split to remove file path and keep only file name
+            plt.legend([split(r'[/\\]', item)[-1] for item in self.csv_files], loc="upper right")
 
             self.save_plot(fig, metric)
             plt.clf()

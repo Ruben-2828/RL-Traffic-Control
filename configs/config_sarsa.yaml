@@ -5,50 +5,46 @@ Plotter_settings:
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_instances:
+  Output: 'output/csv/sarsa'
   Traffic_type_training: ['low_traffic','medium_traffic','high_traffic']
   SARSA_run_1:
     Agent_type: 'SARSA'
-    Config:
-      Runs: 5
-      Alpha: 0.1
-      Gamma: 0.99
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99
+    Runs: 5
+    Alpha: 0.1
+    Gamma: 0.99
+    Init_epsilon: 1.0
+    Min_epsilon: 0.01
+    Decay: 0.99
   SARSA_run_2:
     Agent_type: 'SARSA'
-    Config:
-      Runs: 5
-      Alpha: 0.001
-      Gamma: 0.95
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.9995
+    Runs: 5
+    Alpha: 0.001
+    Gamma: 0.95
+    Init_epsilon: 1.0
+    Min_epsilon: 0.01
+    Decay: 0.9995
   SARSA_run_3:
     Agent_type: 'SARSA'
-    Config:
-      Runs: 5
-      Alpha: 0.05
-      Gamma: 0.98
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99999
+    Runs: 5
+    Alpha: 0.05
+    Gamma: 0.98
+    Init_epsilon: 1.0
+    Min_epsilon: 0.01
+    Decay: 0.99999
   SARSA_run_4:
     Agent_type: 'SARSA'
-    Config:
-      Runs: 5
-      Alpha: 0.01
-      Gamma: 0.97
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99
+    Runs: 5
+    Alpha: 0.01
+    Gamma: 0.97
+    Init_epsilon: 1.0
+    Min_epsilon: 0.01
+    Decay: 0.99
   SARSA_run_5:
     Agent_type: 'SARSA'
-    Config:
-      Runs: 5
-      Alpha: 0.0001
-      Gamma: 0.96
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99
+    Runs: 5
+    Alpha: 0.0001
+    Gamma: 0.96
+    Init_epsilon: 1.0
+    Min_epsilon: 0.01
+    Decay: 0.99
 
