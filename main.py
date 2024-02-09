@@ -2,9 +2,9 @@ import os
 import sys
 
 from scripts.utils.runner import Runner
-from utils.config_parser import ConfigsParser
+from scripts.utils.config_parser import ConfigsParser
 
-from utils.plotter import Plotter
+from scripts.utils.plotter import Plotter
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")

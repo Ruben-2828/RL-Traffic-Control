@@ -1,7 +1,7 @@
 
 import yaml
 
-from utils.config_values import Metric, TrafficType, AgentType
+from scripts.utils.config_values import Metric, TrafficType, AgentType
 
 
 class ConfigsParser:

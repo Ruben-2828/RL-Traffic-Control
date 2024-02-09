@@ -22,9 +22,9 @@ class Runner:
         self.plotter = plotter
         self.learn = learn
         self.agents = []
-        self.env = self.set_environment(self.configs['Traffic_type'])
+        self.env = self.create_environment(self.configs['Traffic_type'])
 
-    def set_environment(self, traffic_type) -> SumoEnvironment:
+    def create_environment(self, traffic_type) -> SumoEnvironment:
 
         route_file = None
 
@@ -43,6 +43,7 @@ class Runner:
             min_green=10,
             max_green=50,
             single_agent=True,
+            add_per_agent_info=False
         )
 
     def run(self) -> None:
@@ -63,7 +64,7 @@ class Runner:
             agent = QLearningAgent(config, self.env, name)
             self.agents.append(agent)
 
-    def save_agent(self):
+    def save_agent_to_file(self):
         return None
 
     def load_agent_from_file(self):
