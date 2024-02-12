@@ -4,7 +4,7 @@ from scripts.utils.config_parser import ConfigsParser
 
 from scripts.utils.plotter import Plotter
 
-config_parser = ConfigsParser('configs/config_ql.yaml')
+config_parser = ConfigsParser('configs/config_sarsa.yaml') #mod
 config_parser.parse()
 plotter_configs = config_parser.get_plotter_config()
 runner_configs = config_parser.get_runner_config()

@@ -56,13 +56,14 @@ class Runner:
 
         for agent in self.agents:
             print("Running agent: " + agent.get_name())
-            agent.run(self.env, self.learn, output_path)
+            agent.run(self.learn, output_path) #mod
 
     def load_agents_from_configs(self):
 
         for name, config in self.configs['Instances'].items():
-            agent = TrueOnlineSarsaLambda(config, self.env, name)
+            agent = TrueOnlineSarsaLambda(self.env.observation_space, self.env.action_space, config, self.env, name) #mod
             self.agents.append(agent)
+
 
     def save_agent_to_file(self):
         return None

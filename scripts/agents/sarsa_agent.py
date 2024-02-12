@@ -1,33 +1,42 @@
 import os
+import numpy as np
+
 from sumo_rl import SumoEnvironment
+
 from linear_rl.true_online_sarsa import TrueOnlineSarsaLambda
+from linear_rl.fourier import FourierBasis
 from scripts.agents.learning_agent import LearningAgent
-from sumo_rl.util.gen_route import write_route_file
+
 from gym import spaces  
 
-class SarsaLearningAgent(LearningAgent):
+class TrueOnlineSarsaLambda(LearningAgent):
 
-    def __init__(self, config: dict, env: SumoEnvironment, name: str):
+    def __init__(self, state_space: spaces.Space, action_space: spaces.Space, config: dict, env: SumoEnvironment, name: str):
         """
         Sarsa-Learning Agent constructor
+        :param state_space: observation space of the environment
+        :param action_space: action space of the environment
         :param config: dict containing the configuration of the SARSA agent
         :param env: Sumo Environment object
         """
         super().__init__(config, env, name)
+        self.state_space = state_space
+        self.action_space = action_space
+        self.min_max_norm = True
+        self.basis = FourierBasis(state_space=self.state_space, action_space=self.action_space, order=10)
+
 
     def init_agent(self):
-        state_space = self.env.observation_space  
-        action_space = self.env.action_space
-
         self.agent = TrueOnlineSarsaLambda(
-            state_space=state_space,
-            action_space=action_space,
+            self.env.observation_space,
+            self.env.action_space,
             alpha=self.config['Alpha'],
             gamma=self.config['Gamma'],
             epsilon=self.config['Epsilon'],
-            fourier_order=self.config.get('FourierOrder', 7),
-            lamb=self.config.get('Lambda', 0.95)
-        )
+            fourier_order=7,
+            lamb=0.95
+    )
+
 
     def run(self, learn: bool, out_path: str) -> None:
         if self.agent is None:
@@ -56,3 +65,28 @@ class SarsaLearningAgent(LearningAgent):
 
     def load(self) -> None:
         pass
+
+    def get_q_value(self, features, action):
+        return np.dot(self.theta[action], features)
+        
+    def get_features(self, state):
+        if self.min_max_norm:
+            state = (state - self.state_space.low) / (self.state_space.high - self.state_space.low)
+        return self.basis.get_features(state)
+    
+    def reset_traces(self):
+        self.q_old = None
+        for a in range(self.action_dim):
+            self.et[a].fill(0.0)
+    
+    def act(self, obs):
+        features = self.get_features(obs)
+        return self.get_action(features)
+
+    def get_action(self, features):
+        if np.random.rand() < self.epsilon:
+            return self.action_space.sample()
+        else:
+            q_values = [self.get_q_value(features, a) for a in range(self.action_dim)]
+            return q_values.index(max(q_values))
+        

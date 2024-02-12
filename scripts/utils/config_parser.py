@@ -143,7 +143,11 @@ class ConfigsParser:
             return False
         if not (0 <= instance['Gamma'] <= 1):
             return False
-        if 'Fourier' not in instance:
+        if 'Epsilon' not in instance:
+            return False
+        if not (0 <= instance['Epsilon'] <= 1):
+            return False
+        if 'FourierOrder' not in instance:
             return False
         if 'Lambda' not in instance:
             return False

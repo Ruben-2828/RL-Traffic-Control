@@ -13,6 +13,7 @@ Agent_settings:
       Runs: 5
       Alpha: 0.1
       Gamma: 0.99
+      Epsilon: 0.05
       FourierOrder: 7
       Lambda: 0.95
     SARSA_run_2:
@@ -20,5 +21,6 @@ Agent_settings:
       Runs: 5
       Alpha: 0.4
       Gamma: 0.5
+      Epsilon: 0.05
       FourierOrder: 7
       Lambda: 0.95
