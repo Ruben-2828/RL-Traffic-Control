@@ -3,7 +3,7 @@ from sumo_rl import SumoEnvironment
 import os
 
 from scripts.agents.ql_agent import QLearningAgent
-
+from scripts.agents.sarsa_agent import TrueOnlineSarsaLambda
 
 class Runner:
     """
@@ -61,7 +61,7 @@ class Runner:
     def load_agents_from_configs(self):
 
         for name, config in self.configs['Instances'].items():
-            agent = QLearningAgent(config, self.env, name)
+            agent = TrueOnlineSarsaLambda(config, self.env, name)
             self.agents.append(agent)
 
     def save_agent_to_file(self):

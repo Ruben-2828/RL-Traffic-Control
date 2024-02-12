@@ -95,32 +95,60 @@ class ConfigsParser:
                 return False
             if instance['Agent_type'] not in AgentType:
                 return False
-            if 'Runs' not in instance:
-                return False
-            if instance['Runs'] <= 0:
-                return False
-            if 'Alpha' not in instance:
-                return False
-            if not (0 < instance['Alpha'] <= 1):
-                return False
-            if 'Gamma' not in instance:
-                return False
-            if not (0 <= instance['Gamma'] <= 1):
-                return False
-            if 'Init_epsilon' not in instance:
-                return False
-            if not (0 <= instance['Init_epsilon'] <= 1):
-                return False
-            if 'Min_epsilon' not in instance:
-                return False
-            if not (0 <= instance['Min_epsilon'] <= 1):
-                return False
-            if 'Decay' not in instance:
-                return False
-            if not (0 <= instance['Decay'] <= 1):
-                return False
-
+            if instance['Agent_type'] == 'QL':
+                return self.check_ql(instance)
+            if instance['Agent_type'] == 'SARSA':
+                return self.check_sarsa(instance)
         return True
+
+    @staticmethod     
+    def check_ql(instance) -> bool:
+        if 'Runs' not in instance:
+            return False
+        if instance['Runs'] <= 0:
+            return False
+        if 'Alpha' not in instance:
+            return False
+        if not (0 < instance['Alpha'] <= 1):
+            return False
+        if 'Gamma' not in instance:
+            return False
+        if not (0 <= instance['Gamma'] <= 1):
+            return False
+        if 'Init_epsilon' not in instance:
+            return False
+        if not (0 <= instance['Init_epsilon'] <= 1):
+            return False
+        if 'Min_epsilon' not in instance:
+            return False
+        if not (0 <= instance['Min_epsilon'] <= 1):
+            return False
+        if 'Decay' not in instance:
+            return False
+        if not (0 <= instance['Decay'] <= 1):
+            return False
+        return True
+    
+    @staticmethod   
+    def check_sarsa(instance) -> bool:
+        if 'Runs' not in instance:
+            return False
+        if instance['Runs'] <= 0:
+            return False
+        if 'Alpha' not in instance:
+            return False
+        if not (0 < instance['Alpha'] <= 1):
+            return False
+        if 'Gamma' not in instance:
+            return False
+        if not (0 <= instance['Gamma'] <= 1):
+            return False
+        if 'Fourier' not in instance:
+            return False
+        if 'Lambda' not in instance:
+            return False
+        return True
+    
 
 
 
