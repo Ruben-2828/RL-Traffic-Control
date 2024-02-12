@@ -93,7 +93,6 @@ class Plotter:
         for metric in self.metrics:
             fig = plt.figure(figsize=(self.width, self.height))
 
-            plt.rcParams['lines.linewidth'] = 1
             plt.title(Titles[metric], fontdict=labels_font)
             plt.xlabel('step')
             plt.ylabel(Ylabels[metric])

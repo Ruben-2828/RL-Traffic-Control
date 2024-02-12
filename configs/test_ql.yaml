@@ -8,7 +8,7 @@ Agent_settings:
   Output: 'output/csv/ql'
   Traffic_type: 'low'
   Instances:
-    DL_run_1:
+    QL_run_1:
       Agent_type: 'QL'
       Runs: 3
       Alpha: 0.1
@@ -16,7 +16,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.99
-    DL_run_2:
+    QL_run_2:
       Agent_type: 'QL'
       Runs: 3
       Alpha: 0.001

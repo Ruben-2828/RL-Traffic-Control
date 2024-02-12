@@ -7,8 +7,8 @@ from sumo_rl import SumoEnvironment
 from sumo_rl.agents import QLAgent
 from sumo_rl.exploration import EpsilonGreedy
 
-from utils.config_parser import ConfigsParser
-from utils.plotter import Plotter
+from scripts.utils.config_parser import ConfigsParser
+from scripts.utils.plotter import Plotter
 
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")

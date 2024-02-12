@@ -39,8 +39,8 @@ class Runner:
             net_file="big-intersection/BI.net.xml",
             route_file=route_file,
             use_gui=False,
-            num_seconds=1000,
-            min_green=10,
+            num_seconds=10000,
+            min_green=5,
             max_green=50,
             single_agent=True,
             add_per_agent_info=False
