@@ -6,11 +6,11 @@ Plotter_settings:
 
 Agent_settings:
   Output: 'output/csv/ql'
-  Traffic_type: 'high'
+  Traffic_type: 'medium'
   Instances:
     QL_run_1:
       Agent_type: 'QL'
-      Runs: 5
+      Runs: 2
       Alpha: 0.1
       Gamma: 0.99
       Init_epsilon: 1.0
@@ -18,9 +18,9 @@ Agent_settings:
       Decay: 0.99
     QL_run_2:
       Agent_type: 'QL'
-      Runs: 5
-      Alpha: 0.4
-      Gamma: 0.5
+      Runs: 2
+      Alpha: 0.01
+      Gamma: 0.75
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.9995

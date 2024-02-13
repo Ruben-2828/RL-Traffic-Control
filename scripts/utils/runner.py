@@ -2,7 +2,10 @@ from sumo_rl import SumoEnvironment
 
 import os
 
+from scripts.agents.dqn_agent import DQNAgent
+from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
+from scripts.utils.plotter import Plotter
 
 
 class Runner:
@@ -10,7 +13,7 @@ class Runner:
     Runner allows to run multiple tests on agents with different configurations
     """
 
-    def __init__(self, configs, plotter, learn=True):
+    def __init__(self, configs: dict, plotter: Plotter, learn: bool = True):
         """
         Runner builder
         :param configs: dict representing runner configurations
@@ -18,11 +21,11 @@ class Runner:
         :param learn: boolean, if True agents will learn, if False agents will
                       only be tested
         """
-        self.configs = configs
-        self.plotter = plotter
-        self.learn = learn
-        self.agents = []
-        self.env = self.create_environment(self.configs['Traffic_type'])
+        self.configs: dict = configs
+        self.plotter: Plotter = plotter
+        self.learn: bool = learn
+        self.agents: [LearningAgent] = []
+        self.env: SumoEnvironment = self.create_environment(self.configs['Traffic_type'])
 
     def create_environment(self, traffic_type) -> SumoEnvironment:
 
@@ -43,7 +46,8 @@ class Runner:
             min_green=5,
             max_green=50,
             single_agent=True,
-            add_per_agent_info=False
+            add_per_agent_info=False,
+            sumo_warnings=False,
         )
 
     def run(self) -> None:
@@ -58,10 +62,15 @@ class Runner:
             print("Running agent: " + agent.get_name())
             agent.run(self.env, self.learn, output_path)
 
+        self.env.close()
+
     def load_agents_from_configs(self):
 
         for name, config in self.configs['Instances'].items():
-            agent = QLearningAgent(config, self.env, name)
+            if config['Agent_type'] == 'QL':
+                agent = QLearningAgent(config, self.env, name)
+            if config['Agent_type'] == 'DQN':
+                agent = DQNAgent(config, self.env, name)
             self.agents.append(agent)
 
     def save_agent_to_file(self):

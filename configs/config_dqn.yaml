@@ -4,47 +4,24 @@ Plotter_settings:
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
-Agent_instances:
+Agent_settings:
   Output: 'output/csv/dqn'
-  Traffic_type_training: ['low_traffic','medium_traffic','high_traffic']
-  DQN_run_1:
-    Agent_type: 'DQN'
-    Runs: 5
-    Alpha: 0.1
-    Gamma: 0.99
-    Init_epsilon: 1.0
-    Min_epsilon: 0.01
-    Decay: 0.99
-  DQN_run_2:
-    Agent_type: 'DQN'
-    Runs: 5
-    Alpha: 0.001
-    Gamma: 0.95
-    Init_epsilon: 1.0
-    Min_epsilon: 0.01
-    Decay: 0.9995
-  DQN_run_3:
-    Agent_type: 'DQN'
-    Runs: 5
-    Alpha: 0.05
-    Gamma: 0.98
-    Init_epsilon: 1.0
-    Min_epsilon: 0.01
-    Decay: 0.99999
-  DQN_run_4:
-    Agent_type: 'DQN'
-    Runs: 5
-    Alpha: 0.01
-    Gamma: 0.97
-    Init_epsilon: 1.0
-    Min_epsilon: 0.01
-    Decay: 0.99
-  DQN_run_5:
-    Agent_type: 'DQN'
-    Runs: 5
-    Alpha: 0.0001
-    Gamma: 0.96
-    Init_epsilon: 1.0
-    Min_epsilon: 0.01
-    Decay: 0.99
+  Traffic_type: 'medium'
+  Instances:
+    DQN_run_1:
+      Agent_type: 'DQN'
+      Runs: 5
+      Alpha: 0.1
+      Gamma: 0.99
+      Init_epsilon: 1.0
+      Final_epsilon: 0.01
+      Exp_fraction: 0.99
+    DQN_run_2:
+      Agent_type: 'DQN'
+      Runs: 5
+      Alpha: 0.01
+      Gamma: 0.75
+      Init_epsilon: 1.0
+      Final_epsilon: 0.01
+      Exp_fraction: 0.9996
 

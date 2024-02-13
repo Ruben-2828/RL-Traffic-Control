@@ -95,32 +95,70 @@ class ConfigsParser:
                 return False
             if instance['Agent_type'] not in AgentType:
                 return False
-            if 'Runs' not in instance:
-                return False
-            if instance['Runs'] <= 0:
-                return False
-            if 'Alpha' not in instance:
-                return False
-            if not (0 < instance['Alpha'] <= 1):
-                return False
-            if 'Gamma' not in instance:
-                return False
-            if not (0 <= instance['Gamma'] <= 1):
-                return False
-            if 'Init_epsilon' not in instance:
-                return False
-            if not (0 <= instance['Init_epsilon'] <= 1):
-                return False
-            if 'Min_epsilon' not in instance:
-                return False
-            if not (0 <= instance['Min_epsilon'] <= 1):
-                return False
-            if 'Decay' not in instance:
-                return False
-            if not (0 <= instance['Decay'] <= 1):
-                return False
+            if instance['Agent_type'] == 'QL':
+                return self.check_ql(instance)
+            if instance['Agent_type'] == 'DQN':
+                return self.check_dqn(instance)
+
+        return False
+
+    @staticmethod
+    def check_ql(config) -> bool:
+
+        if 'Runs' not in config:
+            return False
+        if config['Runs'] <= 0:
+            return False
+        if 'Alpha' not in config:
+            return False
+        if not (0 < config['Alpha'] <= 1):
+            return False
+        if 'Gamma' not in config:
+            return False
+        if not (0 <= config['Gamma'] <= 1):
+            return False
+        if 'Init_epsilon' not in config:
+            return False
+        if not (0 <= config['Init_epsilon'] <= 1):
+            return False
+        if 'Min_epsilon' not in config:
+            return False
+        if not (0 <= config['Min_epsilon'] <= 1):
+            return False
+        if 'Decay' not in config:
+            return False
+        if not (0 <= config['Decay'] <= 1):
+            return False
 
         return True
 
+    @staticmethod
+    def check_dqn(config) -> bool:
 
+        if 'Runs' not in config:
+            return False
+        if config['Runs'] <= 0:
+            return False
+        if 'Alpha' not in config:
+            return False
+        if not (0 < config['Alpha'] <= 1):
+            return False
+        if 'Gamma' not in config:
+            return False
+        if not (0 <= config['Gamma'] <= 1):
+            return False
+        if 'Init_epsilon' not in config:
+            return False
+        if not (0 <= config['Init_epsilon'] <= 1):
+            return False
+        if 'Final_epsilon' not in config:
+            return False
+        if not (0 <= config['Final_epsilon'] <= 1):
+            return False
+        if 'Exp_fraction' not in config:
+            return False
+        if not (0 <= config['Exp_fraction'] <= 1):
+            return False
+
+        return True
 

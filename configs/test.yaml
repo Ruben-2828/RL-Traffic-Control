@@ -5,22 +5,22 @@ Plotter_settings:
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
-  Output: 'output/csv/ql'
+  Output: 'output/csv/test'
   Traffic_type: 'low'
   Instances:
-    QL_run_1:
-      Agent_type: 'QL'
-      Runs: 3
-      Alpha: 0.1
-      Gamma: 0.99
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99
     QL_run_2:
       Agent_type: 'QL'
-      Runs: 3
+      Runs: 5
       Alpha: 0.001
-      Gamma: 0.95
+      Gamma: 0.9
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.9995
+    DQN_run_2:
+      Agent_type: 'DQN'
+      Runs: 5
+      Alpha: 0.001
+      Gamma: 0.9
+      Init_epsilon: 1.0
+      Final_epsilon: 0.01
+      Exp_fraction: 0.9996
