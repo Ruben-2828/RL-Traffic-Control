@@ -7,6 +7,7 @@ from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
 from scripts.utils.plotter import Plotter
 
+from scripts.agents.sarsa_agent import SarsaAgent
 
 class Runner:
     """
@@ -59,7 +60,7 @@ class Runner:
         output_path = os.path.join(self.configs['Output'], traffic_type)
 
         for agent in self.agents:
-            print("Running agent: " + agent.get_name())
+            print("\nRunning agent: " + agent.get_name())
             agent.run(self.env, self.learn, output_path)
 
         self.env.close()
@@ -71,6 +72,8 @@ class Runner:
                 agent = QLearningAgent(config, self.env, name)
             if config['Agent_type'] == 'DQN':
                 agent = DQNAgent(config, self.env, name)
+            if config['Agent_type'] == 'SARSA':
+                agent = SarsaAgent(config, self.env, name)
             self.agents.append(agent)
 
     def save_agent_to_file(self):
