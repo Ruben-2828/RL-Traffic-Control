@@ -48,7 +48,11 @@ class SarsaAgent(LearningAgent):
                 next_obs_array = to_numpy_array(next_obs)
                 
                 if learn:
-                    self.agent.learn(state=obs_array, action=action, reward=reward, next_state=next_obs_array, done=terminated)
+                    self.agent.learn(state=obs_array,
+                                     action=action,
+                                     reward=reward,
+                                     next_state=next_obs_array,
+                                     done=terminated)
 
                 obs = next_obs
 

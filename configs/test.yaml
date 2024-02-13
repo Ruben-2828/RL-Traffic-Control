@@ -24,3 +24,11 @@ Agent_settings:
       Init_epsilon: 1.0
       Final_epsilon: 0.01
       Exp_fraction: 0.9996
+    SARSA_run_1:
+      Agent_type: 'SARSA'
+      Runs: 5
+      Alpha: 0.0001
+      Gamma: 0.99
+      Epsilon: 0.05
+      FourierOrder: 7
+      Lambda: 0.9
