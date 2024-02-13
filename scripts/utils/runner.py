@@ -3,7 +3,7 @@ from sumo_rl import SumoEnvironment
 import os
 
 from scripts.agents.ql_agent import QLearningAgent
-from scripts.agents.sarsa_agent import TrueOnlineSarsaLambda
+from scripts.agents.sarsa_agent import SarsaAgent
 
 class Runner:
     """
@@ -55,13 +55,13 @@ class Runner:
         output_path = os.path.join(self.configs['Output'], traffic_type)
 
         for agent in self.agents:
-            print("Running agent: " + agent.get_name())
-            agent.run(self.learn, output_path) #mod
+            print("\nRunning agent: " + agent.get_name())
+            agent.run(self.env, self.learn, output_path) 
 
     def load_agents_from_configs(self):
 
         for name, config in self.configs['Instances'].items():
-            agent = TrueOnlineSarsaLambda(self.env.observation_space, self.env.action_space, config, self.env, name) #mod
+            agent = SarsaAgent(config, self.env, name) 
             self.agents.append(agent)
 
 

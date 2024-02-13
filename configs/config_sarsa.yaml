@@ -6,21 +6,21 @@ Plotter_settings:
 
 Agent_settings:
   Output: 'output/csv/sarsa'
-  Traffic_type: 'low'
+  Traffic_type: 'medium'
   Instances:
     SARSA_run_1:
       Agent_type: 'SARSA'
       Runs: 5
-      Alpha: 0.1
+      Alpha: 0.0001
       Gamma: 0.99
       Epsilon: 0.05
       FourierOrder: 7
-      Lambda: 0.95
+      Lambda: 0.9
     SARSA_run_2:
       Agent_type: 'SARSA'
       Runs: 5
-      Alpha: 0.4
-      Gamma: 0.5
-      Epsilon: 0.05
+      Alpha: 0.001
+      Gamma: 0.9
+      Epsilon: 0.1
       FourierOrder: 7
-      Lambda: 0.95
+      Lambda: 0.99
