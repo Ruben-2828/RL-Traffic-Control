@@ -1,3 +1,4 @@
+from sumo_rl import SumoEnvironment
 import os
 
 from sumo_rl import SumoEnvironment     # type: ignore
@@ -23,19 +24,12 @@ class FixedCycleAgent(LearningAgent):
         :param learn: if True, agent will learn. Value DOESN'T matter with Fixed Cycle
         :param out_path: path to save the csv file
         """
-        env.reset()
-
-        for curr_run in range(self.config['Runs']):
-
-            # DA RIFARE DIOOOOOOOOOOOOOOOOOOOOOO
-
-            done = False
-            while env.sim_step < 10000:
-                env._sumo_step()
-
-            out_file = os.path.join(out_path, self.name, self.name)
-            env.save_csv(out_file, curr_run)
-            env.reset()
+        self.env = env
+        self.env.reset()
+        done = False
+        while not done:
+            done = self._step()
+        self.env.reset()
 
     def save(self) -> None:
         """
@@ -48,3 +42,15 @@ class FixedCycleAgent(LearningAgent):
         Loads an agent from a file
         """
         pass
+
+    def _step(self) -> bool:
+        """
+        Perform one step of the environment
+        :return: bool, whether the simulation has terminated
+        """
+        for _ in range(self.env.delta_time):
+            self.env._sumo_step()
+        self.env._compute_observations()
+        self.env._compute_rewards()
+        self.env._compute_info()
+        return self.env._compute_dones()['__all__']
