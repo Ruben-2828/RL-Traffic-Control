@@ -13,25 +13,27 @@ from scripts.agents.sarsa_agent import SarsaAgent
 
 class Runner:
     """
-    Runner allows to run multiple tests on agents with different configurations
+    Runner class that allows to run multiple tests on agents with different configurations
     """
 
     def __init__(self, configs: dict, plotter: Plotter, learn: bool = True):
         """
-        Runner builder
+        Runner constructor
         :param configs: dict representing runner configurations
         :param plotter: plotter object to plot results
-        :param learn: boolean, if True agents will learn, if False agents will
-                      only be tested
+        :param learn: boolean, if True agents will learn, if False it won't
         """
         self.configs: dict = configs
         self.plotter: Plotter = plotter
         self.learn: bool = learn
         self.agents: [LearningAgent] = []
-        self.env: SumoEnvironment = self.create_environment(self.configs['Traffic_type'])
+        self.env: SumoEnvironment = None
 
-    def create_environment(self, traffic_type) -> SumoEnvironment:
-
+    def _set_environment(self, traffic_type: str) -> None:
+        """
+        environment setter
+        :param traffic_type: type of traffic of the environment
+        """
         route_file = None
 
         if traffic_type == 'low':
@@ -41,7 +43,7 @@ class Runner:
         if traffic_type == 'high':
             route_file = "big-intersection/BI_200_test.rou.xml"
 
-        return SumoEnvironment(
+        self.env = SumoEnvironment(
             net_file="big-intersection/BI.net.xml",
             route_file=route_file,
             use_gui=False,
@@ -55,9 +57,14 @@ class Runner:
         )
 
     def run(self) -> None:
+        """
+        method to run all the agents simulations
+        """
 
         if not self.agents:
             self.load_agents_from_configs()
+        if self.env is None:
+            self._set_environment(self.configs['Traffic_type'])
 
         traffic_type = self.configs['Traffic_type']
         output_path = os.path.join(self.configs['Output'], traffic_type)
@@ -67,8 +74,12 @@ class Runner:
             agent.run(self.env, self.learn, output_path)
 
         self.env.close()
+        self.env = None
 
     def load_agents_from_configs(self):
+        """
+        load (untrained) agents from config file and appends them to the agents list
+        """
 
         for name, config in self.configs['Instances'].items():
             if config['Agent_type'] == 'QL':
@@ -81,8 +92,9 @@ class Runner:
                 agent = FixedCycleAgent(config, self.env, name)
             self.agents.append(agent)
 
-    def save_agent_to_file(self):
-        return None
-
-    def load_agent_from_file(self):
+    def load_agents_from_file(self, input_file: str) -> None:
+        """
+        Load (already trained) agent from file and appends it to the agents list
+        :param input_file: str representing the agent's save file
+        """
         return None

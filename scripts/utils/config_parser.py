@@ -37,8 +37,7 @@ class ConfigsParser:
 
     def parse(self) -> None:
         """
-        parse read the configs from the yaml file in input and sets plotter and
-        learning agents configs
+        read the configs from the yaml file in input and sets plotter and learning agents configs
         """
 
         with open(self.yaml_file) as f:
@@ -50,14 +49,14 @@ class ConfigsParser:
         temp_plotter_config = configs['Plotter_settings']
         temp_la_configs = configs['Agent_settings']
 
-        if not (self.check_plotter_config(temp_plotter_config) and
-                self.check_learning_agents_config(temp_la_configs)):
+        if not (self._check_plotter_config(temp_plotter_config) and
+                self._check_learning_agents_config(temp_la_configs)):
             raise Exception('bad config file format')
 
         self.plotter_config = temp_plotter_config
         self.learning_agents_instances = temp_la_configs
 
-    def check_plotter_config(self, configs: dict) -> bool:
+    def _check_plotter_config(self, configs: dict) -> bool:
         """
         checks if the plotter configs read from the yaml file are well formatted
         :param configs: dict representing the plotter configs
@@ -73,7 +72,7 @@ class ConfigsParser:
 
         return True
 
-    def check_learning_agents_config(self, configs: dict) -> bool:
+    def _check_learning_agents_config(self, configs: dict) -> bool:
         """
         checks if the learning agents configs read from the yaml file are well formatted
         :param configs: dict representing the learning agents configs
@@ -96,17 +95,21 @@ class ConfigsParser:
             if instance['Agent_type'] not in AgentType:
                 return False
             if instance['Agent_type'] == 'QL':
-                return self.check_ql(instance)
+                return self._check_ql(instance)
             if instance['Agent_type'] == 'DQN':
-                return self.check_dqn(instance)
+                return self._check_dqn(instance)
             if instance['Agent_type'] == 'SARSA':
-                return self.check_sarsa(instance)
+                return self._check_sarsa(instance)
             if instance['Agent_type'] == 'FIXED':
-                return self.check_fixed(instance)
+                return self._check_fixed(instance)
         return False
 
-    @staticmethod
-    def check_ql(config) -> bool:
+    def _check_ql(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid QL agent
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
 
         if 'Runs' not in config:
             return False
@@ -135,8 +138,12 @@ class ConfigsParser:
 
         return True
 
-    @staticmethod
-    def check_dqn(config) -> bool:
+    def _check_dqn(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid DQN agent
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
 
         if 'Runs' not in config:
             return False
@@ -165,34 +172,42 @@ class ConfigsParser:
 
         return True
 
-    @staticmethod
-    def check_sarsa(instance) -> bool:
+    def _check_sarsa(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid SARSA agent
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
 
-        if 'Runs' not in instance:
+        if 'Runs' not in config:
             return False
-        if instance['Runs'] <= 0:
+        if config['Runs'] <= 0:
             return False
-        if 'Alpha' not in instance:
+        if 'Alpha' not in config:
             return False
-        if not (0 < instance['Alpha'] <= 1):
+        if not (0 < config['Alpha'] <= 1):
             return False
-        if 'Gamma' not in instance:
+        if 'Gamma' not in config:
             return False
-        if not (0 <= instance['Gamma'] <= 1):
+        if not (0 <= config['Gamma'] <= 1):
             return False
-        if 'Epsilon' not in instance:
+        if 'Epsilon' not in config:
             return False
-        if not (0 <= instance['Epsilon'] <= 1):
+        if not (0 <= config['Epsilon'] <= 1):
             return False
-        if 'FourierOrder' not in instance:
+        if 'FourierOrder' not in config:
             return False
-        if 'Lambda' not in instance:
+        if 'Lambda' not in config:
             return False
 
         return True
 
-    @staticmethod
-    def check_fixed(config) -> bool:
+    def _check_fixed(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid Fixed Cycle agent
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
 
         if 'Runs' not in config:
             return False

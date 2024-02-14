@@ -14,10 +14,14 @@ class QLearningAgent(LearningAgent):
         Q-Learning Agent constructor
         :param config: dict containing the configuration of the QL agent
         :param env: Sumo Environment object
+        :param name: name of the agent, used for saving models, csvs and plots
         """
         super().__init__(config, env, name)
 
-    def init_agent(self):
+    def _init_agent(self):
+        """
+        Initialize the agent object using self.config
+        """
 
         self.agent = QLAgent(
             starting_state=self.env.encode(self.env.reset()[0], self.env.ts_ids[0]),
@@ -31,9 +35,14 @@ class QLearningAgent(LearningAgent):
                                                ))
 
     def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
-
+        """
+        Run agents for number of episodes specified in self.config['Runs'] and save the csvs
+        :param env: Sumo Environment object
+        :param learn: if True, agent will learn
+        :param out_path: path to save the csv file
+        """
         if self.agent is None:
-            self.init_agent()
+            self._init_agent()
 
         for curr_run in range(self.config['Runs']):
 
@@ -48,7 +57,13 @@ class QLearningAgent(LearningAgent):
             env.reset()
 
     def save(self) -> None:
+        """
+        Saves the trained agent to a file
+        """
         pass
 
     def load(self) -> None:
+        """
+        Loads an agent from a file
+        """
         pass

@@ -6,29 +6,30 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from re import split
 
-Titles = {
-    'system_total_stopped': 'Number of stationary vehicles',
-    'system_total_waiting_time': 'Total waiting time',
-    'system_mean_waiting_time': 'Mean waiting time',
-    'system_mean_speed': 'Mean speed'
-}
-
-Ylabels = {
-    'system_total_stopped': 'Stationary vehicles',
-    'system_total_waiting_time': 'Waiting time',
-    'system_mean_waiting_time': 'Waiting time',
-    'system_mean_speed': 'Speed'
-}
-
-labels_font = {
-    'family': 'serif',
-    'color':  'darkred',
-    'weight': 'normal',
-    'size': 18,
-}
-
 
 class Plotter:
+
+    # dict to set title according to set metric
+    _Titles = {
+        'system_total_stopped': 'Number of stationary vehicles',
+        'system_total_waiting_time': 'Total waiting time',
+        'system_mean_waiting_time': 'Mean waiting time',
+        'system_mean_speed': 'Mean speed'
+    }
+    # dict to set y labels according to set metric
+    _Ylabels = {
+        'system_total_stopped': 'Stationary vehicles',
+        'system_total_waiting_time': 'Waiting time',
+        'system_mean_waiting_time': 'Waiting time',
+        'system_mean_speed': 'Speed'
+    }
+    # dict containing the font settings for labels and title
+    _labels_font = {
+        'family': 'serif',
+        'color': 'darkred',
+        'weight': 'normal',
+        'size': 18,
+    }
 
     def __init__(self, output=None, metrics=None, width=3840, height=1080):
         """
@@ -93,9 +94,9 @@ class Plotter:
         for metric in self.metrics:
             fig = plt.figure(figsize=(self.width, self.height))
 
-            plt.title(Titles[metric], fontdict=labels_font)
-            plt.xlabel('step')
-            plt.ylabel(Ylabels[metric])
+            plt.title(self._Titles[metric], fontdict=self._labels_font)
+            plt.xlabel('step', fontdict=self._labels_font)
+            plt.ylabel(self._Ylabels[metric], fontdict=self._labels_font)
 
             for data in self.df:
                 plt.plot(data.get('step'), data.get(metric))
@@ -106,9 +107,11 @@ class Plotter:
             self.save_plot(fig, metric)
             plt.clf()
 
-    def save_plot(self, fig, metric) -> None:
+    def save_plot(self, fig: plt.figure, metric: str) -> None:
         """
         save_plot saves the plot following the format in input
+        :param fig: figure to save
+        :param metric: metric used in plot. Needed to set file name
         """
         # If output dir does not exist, create it
         os.makedirs(self.output, exist_ok=True)

@@ -23,5 +23,3 @@ TrafficType = frozenset({
     'medium',
     'high'
 })
-
-
