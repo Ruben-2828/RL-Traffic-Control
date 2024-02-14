@@ -34,10 +34,9 @@ class QLearningAgent(LearningAgent):
                                                decay=self.config['Decay']
                                                ))
 
-    def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> None:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
-        :param env: Sumo Environment object
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
         """
@@ -48,13 +47,13 @@ class QLearningAgent(LearningAgent):
 
             done = False
             while not done:
-                state, reward, _, done, _ = env.step(self.agent.act())
+                state, reward, _, done, _ = self.env.step(self.agent.act())
                 if learn:
-                    self.agent.learn(env.encode(state, env.ts_ids[0]), reward)
+                    self.agent.learn(self.env.encode(state, self.env.ts_ids[0]), reward)
 
             out_file = os.path.join(out_path, self.name, self.name)
-            env.save_csv(out_file, curr_run)
-            env.reset()
+            self.env.save_csv(out_file, curr_run)
+            self.env.reset()
 
     def save(self) -> None:
         """

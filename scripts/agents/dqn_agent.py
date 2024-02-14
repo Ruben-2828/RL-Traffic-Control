@@ -43,10 +43,9 @@ class DQNAgent(LearningAgent):
             device='auto'
         )
 
-    def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> None:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
-        :param env: Sumo Environment object
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
         """
@@ -69,13 +68,13 @@ class DQNAgent(LearningAgent):
                 df.to_csv(out_file + "_ep" + str(curr_run) + ".csv")
             else:
                 done = False
-                state = env.reset()[0]
+                state = self.env.reset()[0]
                 while not done:
-                    state, _, _, done, _ = env.step(self.agent.predict(state)[0])
+                    state, _, _, done, _ = self.env.step(self.agent.predict(state)[0])
 
-                env.save_csv(out_file, curr_run)
+                self.env.save_csv(out_file, curr_run)
 
-            env.reset()
+            self.env.reset()
 
     def save(self) -> None:
         """

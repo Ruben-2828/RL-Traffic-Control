@@ -40,10 +40,9 @@ class SarsaAgent(LearningAgent):
             lamb=self.config['Lambda']
         )
 
-    def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> None:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
-        :param env: Sumo Environment object
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
         """
@@ -51,12 +50,12 @@ class SarsaAgent(LearningAgent):
             self._init_agent()
 
         for curr_run in range(self.config['Runs']):
-            obs, _ = env.reset()
+            obs, _ = self.env.reset()
             terminated, truncated = False, False
             
             while not (terminated or truncated):
                 action = self.agent.act(obs)
-                next_obs, reward, terminated, truncated, _ = env.step(action=action)
+                next_obs, reward, terminated, truncated, _ = self.env.step(action=action)
                 
                 obs_array = to_numpy_array(obs)
                 next_obs_array = to_numpy_array(next_obs)
@@ -71,8 +70,8 @@ class SarsaAgent(LearningAgent):
                 obs = next_obs
 
             out_file = os.path.join(out_path, f"{self.name}/{self.name}")
-            env.save_csv(out_file, curr_run)
-            env.reset()
+            self.env.save_csv(out_file, curr_run)
+            self.env.reset()
 
     def save(self) -> None:
         """

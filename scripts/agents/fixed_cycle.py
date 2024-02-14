@@ -17,14 +17,15 @@ class FixedCycleAgent(LearningAgent):
         """
         super().__init__(config, env, name)
 
-    def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
+    def _init_agent(self):
+        self.agent = None
+
+    def run(self, learn: bool, out_path: str) -> None:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
-        :param env: Sumo Environment object
         :param learn: if True, agent will learn. Value DOESN'T matter with Fixed Cycle
         :param out_path: path to save the csv file
         """
-        self.env = env
         self.env.reset()
         done = False
         while not done:

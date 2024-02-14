@@ -32,10 +32,9 @@ class LearningAgent(ABC):
         return self.name
 
     @abstractmethod
-    def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> None:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
-        :param env: Sumo Environment object
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
         """
