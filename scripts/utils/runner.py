@@ -6,6 +6,7 @@ from scripts.agents.dqn_agent import DQNAgent
 from scripts.agents.fixed_cycle import FixedCycleAgent
 from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
+from scripts.environment.custom_environment import CustomEnvironment
 from scripts.utils.plotter import Plotter
 
 from scripts.agents.sarsa_agent import SarsaAgent
@@ -27,54 +28,47 @@ class Runner:
         self.plotter: Plotter = plotter
         self.learn: bool = learn
         self.agents: [LearningAgent] = []
-        self.env: SumoEnvironment = None
+        self._set_environment()
 
-    def _set_environment(self, traffic_type: str) -> None:
+    def _set_environment(self) -> None:
         """
-        environment setter
-        :param traffic_type: type of traffic of the environment
+        environment setter, sets up environment from configs
         """
+        env_config = self.configs['Environment']
         route_file = None
 
-        if traffic_type == 'low':
+        if env_config['Traffic_type'] == 'low':
             route_file = "big-intersection/BI_50_test.rou.xml"
-        if traffic_type == 'medium':
+        if env_config['Traffic_type'] == 'medium':
             route_file = "big-intersection/BI_100_test.rou.xml"
-        if traffic_type == 'high':
+        if env_config['Traffic_type'] == 'high':
             route_file = "big-intersection/BI_200_test.rou.xml"
 
-        self.env = SumoEnvironment(
-            net_file="big-intersection/BI.net.xml",
+        self.env = CustomEnvironment(
             route_file=route_file,
-            use_gui=False,
-            num_seconds=10000,
-            min_green=5,
-            max_green=50,
-            single_agent=True,
-            add_per_agent_info=False,
-            sumo_warnings=False,
-            fixed_ts=True
+            gui=env_config['Gui'],
+            num_seconds=env_config['Num_seconds'],
+            min_green=env_config['Min_green'],
+            max_green=env_config['Max_green'],
+            yellow_time=env_config['Yellow_time'],
+            delta_time=env_config['Delta_time'],
         )
 
     def run(self) -> None:
         """
         method to run all the agents simulations
         """
-
+        if self.env is None:
+            self._set_environment()
         if not self.agents:
             self.load_agents_from_configs()
-        if self.env is None:
-            self._set_environment(self.configs['Traffic_type'])
 
-        traffic_type = self.configs['Traffic_type']
+        traffic_type = self.configs['Environment']['Traffic_type']
         output_path = os.path.join(self.configs['Output'], traffic_type)
 
         for agent in self.agents:
             print("\nRunning agent: " + agent.get_name())
-            agent.run(self.env, self.learn, output_path)
-
-        self.env.close()
-        self.env = None
+            agent.run(self.learn, output_path)
 
     def load_agents_from_configs(self):
         """
@@ -83,16 +77,16 @@ class Runner:
 
         for name, config in self.configs['Instances'].items():
             if config['Agent_type'] == 'QL':
-                agent = QLearningAgent(config, self.env, name)
+                agent = QLearningAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'DQN':
-                agent = DQNAgent(config, self.env, name)
+                agent = DQNAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'SARSA':
-                agent = SarsaAgent(config, self.env, name)
+                agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'FIXED':
-                agent = FixedCycleAgent(config, self.env, name)
+                agent = FixedCycleAgent(config, self.env.get_sumo_env(True), name)
             self.agents.append(agent)
 
-    def load_agents_from_file(self, input_file: str) -> None:
+    def load_agent_from_file(self, input_file: str) -> None:
         """
         Load (already trained) agent from file and appends it to the agents list
         :param input_file: str representing the agent's save file
