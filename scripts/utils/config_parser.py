@@ -101,6 +101,8 @@ class ConfigsParser:
                 return self.check_dqn(instance)
             if instance['Agent_type'] == 'SARSA':
                 return self.check_sarsa(instance)
+            if instance['Agent_type'] == 'FIXED':
+                return self.check_fixed(instance)
         return False
 
     @staticmethod
@@ -165,6 +167,7 @@ class ConfigsParser:
 
     @staticmethod
     def check_sarsa(instance) -> bool:
+
         if 'Runs' not in instance:
             return False
         if instance['Runs'] <= 0:
@@ -184,6 +187,16 @@ class ConfigsParser:
         if 'FourierOrder' not in instance:
             return False
         if 'Lambda' not in instance:
+            return False
+
+        return True
+
+    @staticmethod
+    def check_fixed(config) -> bool:
+
+        if 'Runs' not in config:
+            return False
+        if config['Runs'] <= 0:
             return False
 
         return True

@@ -3,11 +3,13 @@ from sumo_rl import SumoEnvironment
 import os
 
 from scripts.agents.dqn_agent import DQNAgent
+from scripts.agents.fixed_cycle import FixedCycleAgent
 from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
 from scripts.utils.plotter import Plotter
 
 from scripts.agents.sarsa_agent import SarsaAgent
+
 
 class Runner:
     """
@@ -49,6 +51,7 @@ class Runner:
             single_agent=True,
             add_per_agent_info=False,
             sumo_warnings=False,
+            fixed_ts=True
         )
 
     def run(self) -> None:
@@ -74,6 +77,8 @@ class Runner:
                 agent = DQNAgent(config, self.env, name)
             if config['Agent_type'] == 'SARSA':
                 agent = SarsaAgent(config, self.env, name)
+            if config['Agent_type'] == 'FIXED':
+                agent = FixedCycleAgent(config, self.env, name)
             self.agents.append(agent)
 
     def save_agent_to_file(self):
