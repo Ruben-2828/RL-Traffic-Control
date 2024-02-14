@@ -1,40 +1,51 @@
-import os
-
-from sumo_rl import SumoEnvironment     # type: ignore
-from sumo_rl.agents import QLAgent
-from sumo_rl.exploration import EpsilonGreedy
-
+from sumo_rl import SumoEnvironment
 from scripts.agents.learning_agent import LearningAgent
 
 
 class FixedCycleAgent(LearningAgent):
 
-    def __init__(self, config: dict, env: SumoEnvironment, name: str):
+    def __init__(self, config: dict, env: SumoEnvironment, name: str) -> None:
         """
-        Q-Learning Agent constructor
-        :param config: dict containing the configuration of the QL agent
+        Fixed Cycle Agent constructor
+        :param config: dict containing the configuration of the Fixed Cycle agent
         :param env: Sumo Environment object
         """
         super().__init__(config, env, name)
 
     def run(self, env: SumoEnvironment, learn: bool, out_path: str) -> None:
-
-        env.reset()
-
-        for curr_run in range(self.config['Runs']):
-
-            # DA RIFARE DIOOOOOOOOOOOOOOOOOOOOOO
-
-            done = False
-            while env.sim_step < 10000:
-                env._sumo_step()
-
-            out_file = os.path.join(out_path, self.name, self.name)
-            env.save_csv(out_file, curr_run)
-            env.reset()
+        """
+        Run the agent
+        :param env: Sumo Environment object
+        :param learn: bool, whether the agent should learn or not
+        :param out_path: str, path to save the model
+        """
+        self.env = env
+        self.env.reset()
+        done = False
+        while not done:
+            done = self._step()
+        self.env.reset()
 
     def save(self) -> None:
+        """
+        Save the agent's model
+        """
         pass
 
     def load(self) -> None:
+        """
+        Load the agent's model
+        """
         pass
+
+    def _step(self) -> bool:
+        """
+        Perform one step of the environment
+        :return: bool, whether the simulation has terminated
+        """
+        for _ in range(self.env.delta_time):
+            self.env._sumo_step()
+        self.env._compute_observations()
+        self.env._compute_rewards()
+        self.env._compute_info()
+        return self.env._compute_dones()['__all__']
