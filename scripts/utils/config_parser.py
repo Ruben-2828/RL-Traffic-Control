@@ -78,13 +78,12 @@ class ConfigsParser:
         :param configs: dict representing the learning agents configs
         :return: True if learning agents configs are valid, False otherwise
         """
-
-        if 'Traffic_type' not in configs:
-            return False
-        if configs['Traffic_type'] not in TrafficType:
-            return False
-
         if 'Output' not in configs:
+            return False
+
+        if 'Environment' not in configs:
+            return False
+        if not self._check_environment(configs['Environment']):
             return False
 
         if 'Instances' not in configs:
@@ -103,6 +102,42 @@ class ConfigsParser:
             if instance['Agent_type'] == 'FIXED':
                 return self._check_fixed(instance)
         return False
+
+    def _check_environment(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid environment
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
+
+        if 'Traffic_type' not in config:
+            return False
+        if config['Traffic_type'] not in TrafficType:
+            return False
+        if 'Gui' not in config:
+            return False
+        if 'Num_seconds' not in config:
+            return False
+        if config['Num_seconds'] <= 0:
+            return False
+        if 'Min_green' not in config:
+            return False
+        if config['Min_green'] <= 0:
+            return False
+        if 'Max_green' not in config:
+            return False
+        if config['Max_green'] < config['Min_green']:
+            return False
+        if 'Yellow_time' not in config:
+            return False
+        if config['Yellow_time'] <= 0:
+            return False
+        if 'Delta_time' not in config:
+            return False
+        if config['Delta_time'] < config['Yellow_time']:
+            return False
+
+        return True
 
     def _check_ql(self, config: dict) -> bool:
         """

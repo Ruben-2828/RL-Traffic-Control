@@ -6,7 +6,14 @@ Plotter_settings:
 
 Agent_settings:
   Output: 'output/csv/fixed'
-  Traffic_type: 'low'
+  Environment:
+    Traffic_type: 'low'
+    Gui: False
+    Num_seconds: 10000
+    Min_green: 5
+    Max_green: 50
+    Yellow_time: 2
+    Delta_time: 5
   Instances:
     Fixed_run:
       Agent_type: 'FIXED'
