@@ -85,7 +85,9 @@ class QLearningAgent(LearningAgent):
         with open(path, 'rb') as f:
             data = pickle.load(f)
 
-        agent = QLAgent(
+        self.env = env
+
+        self.agent = QLAgent(
             starting_state=self.env.encode(self.env.reset()[0], self.env.ts_ids[0]),
             state_space=self.env.observation_space,
             action_space=self.env.action_space,

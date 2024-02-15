@@ -22,11 +22,7 @@ Agent_settings:
     QL_run:
       Agent_type: 'QL'
       Runs: 5
-      Alpha: 0.001
-      Gamma: 0.9
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.9995
+      Model: 'output/models/QL_run.pkl'
     DQN_run:
       Agent_type: 'DQN'
       Runs: 5

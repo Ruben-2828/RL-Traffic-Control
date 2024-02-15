@@ -13,5 +13,4 @@ p = Plotter()
 p.set_configs(plotter_configs)
 
 r = Runner(runner_configs, p)
-r.load_agent_from_file()
 r.run()

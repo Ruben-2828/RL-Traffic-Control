@@ -61,7 +61,7 @@ class Runner:
         if self.env is None:
             self._set_environment()
         if not self.agents:
-            self.load_agents()
+            self._load_agents()
 
         """
         TODO: inserire in config yaml un campo per il caricamento di un modello gia addestrato da file, quindi:
@@ -107,13 +107,17 @@ class Runner:
         self.plotter.build_plot('last_episodes')
         self.plotter.clear()
 
-    def load_agents(self):
+    def _load_agents(self):
         """
         load (untrained) agents from config file and appends them to the agents list
         """
         for name, config in self.configs['Instances'].items():
             if config['Agent_type'] == 'QL':
-                agent = QLearningAgent(config, self.env.get_sumo_env(False), name)
+                if 'Model' in config:
+                    agent = QLearningAgent(config, None, name)
+                    agent.load(config['Model'], self.env.get_sumo_env(False))
+                else:
+                    agent = QLearningAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'DQN':
                 agent = DQNAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'SARSA':

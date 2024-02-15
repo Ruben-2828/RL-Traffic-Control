@@ -152,26 +152,27 @@ class ConfigsParser:
             return False
         if config['Runs'] <= 0:
             return False
-        if 'Alpha' not in config:
-            return False
-        if not (0 < config['Alpha'] <= 1):
-            return False
-        if 'Gamma' not in config:
-            return False
-        if not (0 <= config['Gamma'] <= 1):
-            return False
-        if 'Init_epsilon' not in config:
-            return False
-        if not (0 <= config['Init_epsilon'] <= 1):
-            return False
-        if 'Min_epsilon' not in config:
-            return False
-        if not (0 <= config['Min_epsilon'] <= 1):
-            return False
-        if 'Decay' not in config:
-            return False
-        if not (0 <= config['Decay'] <= 1):
-            return False
+        if 'Model' not in config:
+            if 'Alpha' not in config:
+                return False
+            if not (0 < config['Alpha'] <= 1):
+                return False
+            if 'Gamma' not in config:
+                return False
+            if not (0 <= config['Gamma'] <= 1):
+                return False
+            if 'Init_epsilon' not in config:
+                return False
+            if not (0 <= config['Init_epsilon'] <= 1):
+                return False
+            if 'Min_epsilon' not in config:
+                return False
+            if not (0 <= config['Min_epsilon'] <= 1):
+                return False
+            if 'Decay' not in config:
+                return False
+            if not (0 <= config['Decay'] <= 1):
+                return False
 
         return True
 
