@@ -32,11 +32,12 @@ class LearningAgent(ABC):
         return self.name
 
     @abstractmethod
-    def run(self, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> str:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
+        :return: path containing the csv output files
         """
         pass
 

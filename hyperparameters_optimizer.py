@@ -70,7 +70,7 @@ if __name__ == '__main__':
     with open(yaml_output_path, 'w') as yaml_output_file:
         yaml_output_data = {
             'Plotter_settings': {
-                'Output': 'output/plots/ql',
+                'Output': 'output/plots/test_low',
                 'Width': 3840,
                 'Height': 1080,
                 'Metrics': ['system_total_stopped', 'system_total_waiting_time', 'system_mean_waiting_time', 'system_mean_speed']

@@ -40,14 +40,18 @@ class SarsaAgent(LearningAgent):
             lamb=self.config['Lambda']
         )
 
-    def run(self, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> str:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
+        :return: path containing the csv output files
         """
         if self.agent is None:
             self._init_agent()
+
+        out_path = os.path.join(out_path, self.name)
+        out_file = os.path.join(out_path, self.name)
 
         for curr_run in range(self.config['Runs']):
             obs, _ = self.env.reset()
@@ -66,12 +70,13 @@ class SarsaAgent(LearningAgent):
                                      reward=reward,
                                      next_state=next_obs_array,
                                      done=terminated)
-
                 obs = next_obs
 
-            out_file = os.path.join(out_path, f"{self.name}/{self.name}")
             self.env.save_csv(out_file, curr_run)
             self.env.reset()
+        self.env.close()
+
+        return out_path
 
     def save(self) -> None:
         """

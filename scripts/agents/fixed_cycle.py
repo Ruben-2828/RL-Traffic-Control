@@ -20,22 +20,27 @@ class FixedCycleAgent(LearningAgent):
     def _init_agent(self):
         self.agent = None
 
-    def run(self, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> str:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
         :param learn: if True, agent will learn. Value DOESN'T matter with Fixed Cycle
         :param out_path: path to save the csv file
+        :return: path containing the csv output files
         """
+
+        out_path = os.path.join(out_path, self.name)
+        out_file = os.path.join(out_path, self.name)
 
         for curr_run in range(self.config['Runs']):
             done = False
             self.env.reset()
             while not done:
                 done = self._step()
-            out_file = os.path.join(out_path, self.name, self.name)
             self.env.save_csv(out_file, curr_run)
 
         self.env.close()
+
+        return out_path
 
     def save(self) -> None:
         """

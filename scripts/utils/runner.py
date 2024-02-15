@@ -1,4 +1,3 @@
-from sumo_rl import SumoEnvironment
 
 import os
 
@@ -65,16 +64,43 @@ class Runner:
 
         traffic_type = self.configs['Environment']['Traffic_type']
         output_path = os.path.join(self.configs['Output'], traffic_type)
+        output_csvs_paths: dict[str, str] = {}
 
         for agent in self.agents:
             print("\nRunning agent: " + agent.get_name())
-            agent.run(self.learn, output_path)
+            csvs_path = agent.run(self.learn, output_path)
+            output_csvs_paths[agent.get_name()] = csvs_path
+
+        self._plot_per_agent(output_csvs_paths)
+        self._plot_last_episode(output_csvs_paths)
+
+    def _plot_per_agent(self, csvs_paths: dict[str, str]) -> None:
+        """
+        for each agent, plot the results of its episodes using self.plotter
+        :param csvs_paths: dict containing the agent and its path to csv files
+        """
+        for name, path in csvs_paths.items():
+            self.plotter.add_csv(path)
+            self.plotter.build_plot(name)
+            self.plotter.clear()
+
+    def _plot_last_episode(self, csvs_path: dict[str, str]) -> None:
+        """
+        plots results of last episode of each agent using self.plotter
+        :param csvs_paths: dict containing the agent and its path to csv files
+        """
+        for path in csvs_path.values():
+            csv_files = [f for f in os.listdir(path) if f.endswith('.csv')]
+            last_episode = os.path.join(path, csv_files[-1])
+            self.plotter.add_csv(last_episode)
+
+        self.plotter.build_plot('last_episodes')
+        self.plotter.clear()
 
     def load_agents_from_configs(self):
         """
         load (untrained) agents from config file and appends them to the agents list
         """
-
         for name, config in self.configs['Instances'].items():
             if config['Agent_type'] == 'QL':
                 agent = QLearningAgent(config, self.env.get_sumo_env(False), name)

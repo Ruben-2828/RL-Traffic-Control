@@ -43,16 +43,18 @@ class DQNAgent(LearningAgent):
             device='auto'
         )
 
-    def run(self, learn: bool, out_path: str) -> None:
+    def run(self, learn: bool, out_path: str) -> str:
         """
         Run agents for number of episodes specified in self.config['Runs'] and save the csvs
         :param learn: if True, agent will learn
         :param out_path: path to save the csv file
+        :return: path containing the csv output files
         """
         if self.agent is None:
             self._init_agent()
 
-        out_file = os.path.join(out_path, self.name, self.name)
+        out_path = os.path.join(out_path, self.name)
+        out_file = os.path.join(out_path, self.name)
         os.makedirs(os.path.dirname(out_file), exist_ok=True)
 
         for curr_run in range(self.config['Runs']):
@@ -73,8 +75,9 @@ class DQNAgent(LearningAgent):
                     state, _, _, done, _ = self.env.step(self.agent.predict(state)[0])
 
                 self.env.save_csv(out_file, curr_run)
+        self.env.close()
 
-            self.env.reset()
+        return out_path
 
     def save(self) -> None:
         """

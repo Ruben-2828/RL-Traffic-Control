@@ -1,6 +1,6 @@
 import os
 from os import listdir
-from os.path import isfile, join
+from os.path import join, isdir
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -63,9 +63,9 @@ class Plotter:
         add_csv adds one (or more) csv file to the csv collection
         :param input_path: can be a dir with multiple csv files or a single csv file
         """
-        if isfile(input_path):
+        if input_path.endswith('.csv'):
             self.csv_files.append(input_path)
-        else:
+        elif isdir(input_path):
             self.csv_files.extend(join(input_path, f) for f in listdir(input_path)
                                   if join(input_path, f).endswith('.csv'))
 
@@ -76,10 +76,12 @@ class Plotter:
         for csv in self.csv_files:
             self.df.append(pd.read_csv(csv))
 
-    def build_plot(self) -> None:
+    def build_plot(self, out_folder: str = None) -> None:
         """
         build_plot builds a plot using data from the dataframe collection.
         Configs must be set before calling this.
+        :param out_folder: folder to save the plots into. If not None, It will be appended
+                           to self.output
         """
         if len(self.csv_files) == 0:
             raise ValueError('No csv files set')
@@ -104,23 +106,29 @@ class Plotter:
             # Using regex split to remove file path and keep only file name
             plt.legend([split(r'[/\\]', item)[-1] for item in self.csv_files], loc="upper right")
 
-            self.save_plot(fig, metric)
+            self._save_plot(fig, metric, out_folder)
             plt.clf()
 
-    def save_plot(self, fig: plt.figure, metric: str) -> None:
+    def _save_plot(self, fig: plt.figure, metric: str, out_folder: str) -> None:
         """
         save_plot saves the plot following the format in input
         :param fig: figure to save
         :param metric: metric used in plot. Needed to set file name
+        :param out_folder: folder in which to save the plots
         """
-        # If output dir does not exist, create it
-        os.makedirs(self.output, exist_ok=True)
+        if out_folder is not None:
+            out_path = os.path.join(self.output, out_folder)
+        else:
+            out_path = self.output
 
-        output_file = self.output + '/plot_' + metric
+        os.makedirs(out_path, exist_ok=True)
+
+        output_file = out_path + '/' + metric
         fig.savefig(output_file, dpi=96)
 
-    def clear_csv_files(self) -> None:
+    def clear(self) -> None:
         """
         clear_csv_files clears the csv files in input
         """
         self.csv_files = []
+        self.df = []

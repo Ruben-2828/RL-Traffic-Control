@@ -1,14 +1,24 @@
 Plotter_settings:
-  Output: 'output/plots/ql'
+  Output: 'output/plots/test_plotter'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
   Output: 'output/csv/test'
-  Traffic_type: 'low'
+  Environment:
+    Traffic_type: 'low'
+    Gui: False
+    Num_seconds: 100
+    Min_green: 5
+    Max_green: 50
+    Yellow_time: 2
+    Delta_time: 5
   Instances:
-    QL_run_2:
+    Fixed_run:
+      Agent_type: 'FIXED'
+      Runs: 1
+    QL_run:
       Agent_type: 'QL'
       Runs: 5
       Alpha: 0.001
@@ -16,7 +26,7 @@ Agent_settings:
       Init_epsilon: 1.0
       Min_epsilon: 0.01
       Decay: 0.9995
-    DQN_run_2:
+    DQN_run:
       Agent_type: 'DQN'
       Runs: 5
       Alpha: 0.001
@@ -24,11 +34,3 @@ Agent_settings:
       Init_epsilon: 1.0
       Final_epsilon: 0.01
       Exp_fraction: 0.9996
-    SARSA_run_1:
-      Agent_type: 'SARSA'
-      Runs: 5
-      Alpha: 0.0001
-      Gamma: 0.99
-      Epsilon: 0.05
-      FourierOrder: 7
-      Lambda: 0.9
