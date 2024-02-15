@@ -109,7 +109,8 @@ class Runner:
 
     def _load_agents(self):
         """
-        load (untrained) agents from config file and appends them to the agents list
+        load (untrained) agents from config file and appends them to the agents list.
+        if 'Model' field is in configs, it loads the agents from save files
         """
         for name, config in self.configs['Instances'].items():
             if config['Agent_type'] == 'QL':
@@ -119,7 +120,11 @@ class Runner:
                 else:
                     agent = QLearningAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'DQN':
-                agent = DQNAgent(config, self.env.get_sumo_env(False), name)
+                if 'Model' in config:
+                    agent = DQNAgent(config, None, name)
+                    agent.load(config['Model'], self.env.get_sumo_env(False))
+                else:
+                    agent = DQNAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'SARSA':
                 agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'FIXED':

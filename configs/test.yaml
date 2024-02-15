@@ -26,8 +26,4 @@ Agent_settings:
     DQN_run:
       Agent_type: 'DQN'
       Runs: 5
-      Alpha: 0.001
-      Gamma: 0.9
-      Init_epsilon: 1.0
-      Final_epsilon: 0.01
-      Exp_fraction: 0.9996
+      Model: 'output/models/DQN_run.pkl'

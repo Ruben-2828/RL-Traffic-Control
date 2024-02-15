@@ -92,7 +92,8 @@ class DQNAgent(LearningAgent):
         :param path: path to load the trained agent from
         :param env: new environment to run the loaded agent on
         """
-        self.agent.load(path, env=env)
+        self.env = env
+        self.agent = DQN.load(path, env=env)
 
 
 class SaveInfos(BaseCallback):
