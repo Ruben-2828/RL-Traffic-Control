@@ -63,14 +63,6 @@ class Runner:
         if not self.agents:
             self._load_agents()
 
-        """
-        TODO: inserire in config yaml un campo per il caricamento di un modello gia addestrato da file, quindi:
-              - modificare config_parse
-              - modificare struttura yaml
-              - modificare load di ogni agent
-              - e penso basta
-        """
-
         traffic_type = self.configs['Environment']['Traffic_type']
         output_path = os.path.join(self.configs['Output_csv'], traffic_type)
         output_csvs_paths: dict[str, str] = {}

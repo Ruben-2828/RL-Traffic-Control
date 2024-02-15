@@ -107,7 +107,7 @@ class Plotter:
             plt.legend([split(r'[/\\]', item)[-1] for item in self.csv_files], loc="upper right")
 
             self._save_plot(fig, metric, out_folder)
-            plt.clf()
+            plt.close()
 
     def _save_plot(self, fig: plt.figure, metric: str, out_folder: str) -> None:
         """
