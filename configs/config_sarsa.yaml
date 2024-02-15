@@ -17,17 +17,38 @@ Agent_settings:
   Instances:
     SARSA_run_1:
       Agent_type: 'SARSA'
-      Runs: 2
-      Alpha: 0.0001
-      Gamma: 0.99
-      Epsilon: 0.05
-      FourierOrder: 7
-      Lambda: 0.9
-    SARSA_run_2:
-      Agent_type: 'SARSA'
-      Runs: 2
-      Alpha: 0.001
+      Runs: 1
+      Alpha: 0.00005
       Gamma: 0.9
       Epsilon: 0.1
-      FourierOrder: 7
-      Lambda: 0.99
+      FourierOrder: 12
+      Lambda: 0.999
+    SARSA_run_2:
+      Agent_type: 'SARSA'
+      Runs: 1
+      Alpha: 0.00001
+      Gamma: 0.9
+      Epsilon: 0.01
+      FourierOrder: 10
+      Lambda: 0.999
+    SARSA_run_3:
+      Agent_type: 'SARSA'
+      Runs: 1
+      Alpha: 0.00001
+      Gamma: 0.75
+      Epsilon: 0.01
+      FourierOrder: 12
+      Lambda: 0.999
+    SARSA_run_4:
+      Agent_type: 'SARSA'
+      Runs: 1
+      Alpha: 0.00001
+      Gamma: 0.75
+      Epsilon: 0.01
+      FourierOrder: 10
+      Lambda: 0.999
+
+
+
+
+
