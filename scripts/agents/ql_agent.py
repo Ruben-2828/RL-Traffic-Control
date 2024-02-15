@@ -1,4 +1,5 @@
 import os
+import pickle
 
 from sumo_rl import SumoEnvironment
 from sumo_rl.agents import QLAgent
@@ -61,14 +62,35 @@ class QLearningAgent(LearningAgent):
 
         return out_path
 
-    def save(self) -> None:
+    def save(self, path: str) -> None:
         """
         Saves the trained agent to a file
+        :param path: path to save the trained agent to
         """
-        pass
+        data = {
+            'alpha': self.agent.alpha,
+            'gamma': self.agent.gamma,
+            'exploration_strategy': self.agent.exploration,
+            'q_table': self.agent.q_table}
 
-    def load(self) -> None:
+        with open(path, 'wb') as f:
+            pickle.dump(data, f)
+
+    def load(self, path: str, env: SumoEnvironment) -> None:
         """
         Loads an agent from a file
+        :param path: path to load the trained agent from
+        :param env: new environment to run the loaded agent on
         """
-        pass
+        with open(path, 'rb') as f:
+            data = pickle.load(f)
+
+        agent = QLAgent(
+            starting_state=self.env.encode(self.env.reset()[0], self.env.ts_ids[0]),
+            state_space=self.env.observation_space,
+            action_space=self.env.action_space,
+            alpha=data['alpha'],
+            gamma=data['gamma'],
+            exploration_strategy=data['exploration_strategy']
+        )
+        self.agent.q_table = data['q_table']

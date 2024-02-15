@@ -6,6 +6,7 @@ from scripts.agents.fixed_cycle import FixedCycleAgent
 from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
 from scripts.environment.custom_environment import CustomEnvironment
+from scripts.utils.config_values import AgentType
 from scripts.utils.plotter import Plotter
 
 from scripts.agents.sarsa_agent import SarsaAgent
@@ -60,10 +61,18 @@ class Runner:
         if self.env is None:
             self._set_environment()
         if not self.agents:
-            self.load_agents_from_configs()
+            self.load_agents()
+
+        """
+        TODO: inserire in config yaml un campo per il caricamento di un modello gia addestrato da file, quindi:
+              - modificare config_parse
+              - modificare struttura yaml
+              - modificare load di ogni agent
+              - e penso basta
+        """
 
         traffic_type = self.configs['Environment']['Traffic_type']
-        output_path = os.path.join(self.configs['Output'], traffic_type)
+        output_path = os.path.join(self.configs['Output_csv'], traffic_type)
         output_csvs_paths: dict[str, str] = {}
 
         for agent in self.agents:
@@ -73,6 +82,7 @@ class Runner:
 
         self._plot_per_agent(output_csvs_paths)
         self._plot_last_episode(output_csvs_paths)
+        self._save_agents_to_file()
 
     def _plot_per_agent(self, csvs_paths: dict[str, str]) -> None:
         """
@@ -87,7 +97,7 @@ class Runner:
     def _plot_last_episode(self, csvs_path: dict[str, str]) -> None:
         """
         plots results of last episode of each agent using self.plotter
-        :param csvs_paths: dict containing the agent and its path to csv files
+        :param csvs_path: dict containing the agent and its path to csv files
         """
         for path in csvs_path.values():
             csv_files = [f for f in os.listdir(path) if f.endswith('.csv')]
@@ -97,7 +107,7 @@ class Runner:
         self.plotter.build_plot('last_episodes')
         self.plotter.clear()
 
-    def load_agents_from_configs(self):
+    def load_agents(self):
         """
         load (untrained) agents from config file and appends them to the agents list
         """
@@ -112,9 +122,10 @@ class Runner:
                 agent = FixedCycleAgent(config, self.env.get_sumo_env(True), name)
             self.agents.append(agent)
 
-    def load_agent_from_file(self, input_file: str) -> None:
-        """
-        Load (already trained) agent from file and appends it to the agents list
-        :param input_file: str representing the agent's save file
-        """
-        return None
+    def _save_agents_to_file(self) -> None:
+
+        os.makedirs(self.configs['Output_model'], exist_ok=True)
+
+        for agent in self.agents:
+            out_file = self.configs['Output_model'] + '/' + agent.get_name() + '.pkl'
+            agent.save(out_file)

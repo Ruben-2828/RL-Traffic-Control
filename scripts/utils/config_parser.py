@@ -78,7 +78,9 @@ class ConfigsParser:
         :param configs: dict representing the learning agents configs
         :return: True if learning agents configs are valid, False otherwise
         """
-        if 'Output' not in configs:
+        if 'Output_csv' not in configs:
+            return False
+        if 'Output_model' not in configs:
             return False
 
         if 'Environment' not in configs:

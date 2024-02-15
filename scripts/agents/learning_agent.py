@@ -41,14 +41,17 @@ class LearningAgent(ABC):
         """
         pass
 
-    def save(self) -> None:
+    def save(self, path: str) -> None:
         """
         Saves the trained agent to a file
+        :param path: path to save the trained agent to
         """
         pass
 
-    def load(self) -> None:
+    def load(self, path: str, env: SumoEnvironment) -> None:
         """
         Loads an agent from a file
+        :param path: path to load the trained agent from
+        :param env: new environment to run the loaded agent on
         """
         pass
