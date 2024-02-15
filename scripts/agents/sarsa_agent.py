@@ -1,18 +1,8 @@
 import os
-import numpy as np
 
 from sumo_rl import SumoEnvironment
 from linear_rl.true_online_sarsa import TrueOnlineSarsaLambda
 from scripts.agents.learning_agent import LearningAgent
-
-
-def to_numpy_array(arr) -> np.ndarray:
-    """
-    Converts the input to a numpy array if it isn't already
-    :param arr: array to be converted
-    :return: array in numpy format
-    """
-    return np.array(arr) if isinstance(arr, tuple) else arr
 
 
 class SarsaAgent(LearningAgent):
@@ -60,16 +50,8 @@ class SarsaAgent(LearningAgent):
             while not (terminated or truncated):
                 action = self.agent.act(obs)
                 next_obs, reward, terminated, truncated, _ = self.env.step(action=action)
-                
-                obs_array = to_numpy_array(obs)
-                next_obs_array = to_numpy_array(next_obs)
-                
-                if learn:
-                    self.agent.learn(state=obs_array,
-                                     action=action,
-                                     reward=reward,
-                                     next_state=next_obs_array,
-                                     done=terminated)
+
+                self.agent.learn(state=obs, action=action, reward=reward, next_state=next_obs, done=terminated)
                 obs = next_obs
 
             self.env.save_csv(out_file, curr_run)

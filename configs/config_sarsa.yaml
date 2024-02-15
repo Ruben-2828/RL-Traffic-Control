@@ -6,11 +6,18 @@ Plotter_settings:
 
 Agent_settings:
   Output: 'output/csv/sarsa'
-  Traffic_type: 'medium'
+  Environment:
+    Traffic_type: 'low'
+    Gui: False
+    Num_seconds: 10000
+    Min_green: 5
+    Max_green: 50
+    Yellow_time: 2
+    Delta_time: 5
   Instances:
     SARSA_run_1:
       Agent_type: 'SARSA'
-      Runs: 5
+      Runs: 2
       Alpha: 0.0001
       Gamma: 0.99
       Epsilon: 0.05
@@ -18,7 +25,7 @@ Agent_settings:
       Lambda: 0.9
     SARSA_run_2:
       Agent_type: 'SARSA'
-      Runs: 5
+      Runs: 2
       Alpha: 0.001
       Gamma: 0.9
       Epsilon: 0.1
