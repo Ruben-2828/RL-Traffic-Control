@@ -69,7 +69,7 @@ class Runner:
             csvs_path = agent.run(self.learn, output_path)
             output_csvs_paths[agent.get_name()] = csvs_path
 
-        print("Plotting agents")
+        print("\nPlotting agents")
         self._plot_per_agent(output_csvs_paths)
         self._plot_last_episode(output_csvs_paths)
 
