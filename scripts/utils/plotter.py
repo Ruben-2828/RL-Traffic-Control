@@ -1,10 +1,11 @@
-import os
-from os import listdir
-from os.path import join, isdir
 
+import os
 import matplotlib.pyplot as plt
 import pandas as pd
+
 from re import split
+from os import listdir
+from os.path import join, isdir
 
 
 class Plotter:

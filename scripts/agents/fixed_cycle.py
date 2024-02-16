@@ -1,8 +1,7 @@
-from sumo_rl import SumoEnvironment
+
 import os
 
-from sumo_rl import SumoEnvironment     # type: ignore
-
+from sumo_rl import SumoEnvironment
 from scripts.agents.learning_agent import LearningAgent
 
 

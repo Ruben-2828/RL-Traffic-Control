@@ -21,6 +21,5 @@ AgentType = frozenset({
 # Possible traffic types to train/test models with
 TrafficType = frozenset({
     'low',
-    'medium',
     'high'
 })

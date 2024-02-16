@@ -4,7 +4,7 @@ from sumo_rl import SumoEnvironment
 
 class CustomEnvironment:
     """
-    Class to bobobobobooboboboobobob TODO: commentare meglio
+    Wrapper for SumoEnvironment to better handle fixed cycle
     """
 
     def __init__(self,

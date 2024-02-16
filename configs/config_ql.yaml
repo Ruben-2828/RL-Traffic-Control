@@ -1,14 +1,14 @@
 Plotter_settings:
-  Output: 'output/plots/training_low'
+  Output: 'output/plots/ql/training_high'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
   Output_csv: 'output/csv/ql'
-  Output_model: 'output/models/low'
+  Output_model: 'output/models/ql/high'
   Environment:
-    Traffic_type: 'low'
+    Traffic_type: 'high'
     Gui: False
     Num_seconds: 5000
     Min_green: 5

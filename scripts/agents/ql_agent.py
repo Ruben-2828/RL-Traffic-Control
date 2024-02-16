@@ -4,7 +4,6 @@ import pickle
 from sumo_rl import SumoEnvironment
 from sumo_rl.agents import QLAgent
 from sumo_rl.exploration import EpsilonGreedy
-
 from scripts.agents.learning_agent import LearningAgent
 
 

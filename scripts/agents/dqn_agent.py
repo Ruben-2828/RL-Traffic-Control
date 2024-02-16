@@ -1,12 +1,10 @@
-import os
-from typing import Union
 
+import os
 import pandas as pd
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.callbacks import BaseCallback
 from sumo_rl import SumoEnvironment
-
 from scripts.agents.learning_agent import LearningAgent
 from scripts.utils.config_values import Metric
 

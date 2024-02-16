@@ -7,7 +7,6 @@ from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
 from scripts.agents.sarsa_agent import SarsaAgent
 from scripts.agents.sarsa_agent_decay import SarsaDecayAgent
-
 from scripts.custom.custom_environment import CustomEnvironment
 from scripts.utils.plotter import Plotter
 
@@ -41,10 +40,8 @@ class Runner:
 
         if env_config['Traffic_type'] == 'low':
             route_file = "big-intersection/BI_50_test.rou.xml"
-        if env_config['Traffic_type'] == 'medium':
-            route_file = "big-intersection/BI_100_test.rou.xml"
         if env_config['Traffic_type'] == 'high':
-            route_file = "big-intersection/BI_200_test.rou.xml"
+            route_file = "big-intersection/BI_150_test.rou.xml"
 
         self.env = CustomEnvironment(
             route_file=route_file,

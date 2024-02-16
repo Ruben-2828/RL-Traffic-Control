@@ -5,12 +5,12 @@
 
 ## Table of Contents
 
-1. [Objective](#objective)
-2. [Contents](#contents)
-3. [Tools](#tools)
-4. [Codebase](#codebase)
-5. [Study](#study)
-6. [References](#references)
+### 1. [Objective](#objective)
+### 2. [Contents](#contents)
+### 3. [Tools](#tools)
+### 4. [Codebase](#codebase)
+### 5. [Study](#study)
+### 6. [References](#references)
 
 ## Objective
 
