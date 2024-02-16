@@ -12,5 +12,5 @@ runner_configs = config_parser.get_runner_config()
 p = Plotter()
 p.set_configs(plotter_configs)
 
-r = Runner(runner_configs, p, False)
+r = Runner(runner_configs, p)
 r.run()

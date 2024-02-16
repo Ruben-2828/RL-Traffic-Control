@@ -1,14 +1,14 @@
 Plotter_settings:
-  Output: 'output/plots/dqn/training_high'
+  Output: 'output/plots/dqn/training_low'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
   Output_csv: 'output/csv/dqn'
-  Output_model: 'output/models/dqn/high'
+  Output_model: 'output/models/dqn/low'
   Environment:
-    Traffic_type: 'high'
+    Traffic_type: 'low'
     Gui: False
     Num_seconds: 10000
     Min_green: 5
@@ -18,10 +18,19 @@ Agent_settings:
   Instances:
     DQN_run_1:
       Agent_type: 'DQN'
-      Runs: 5
+      Runs: 3
       Alpha: 0.01
       Gamma: 0.75
       Init_epsilon: 1.0
       Final_epsilon: 0.01
-      Exp_fraction: 0.9996
+      Exp_fraction: 0.9
+    DQN_run_2:
+      Agent_type: 'DQN'
+      Runs: 3
+      Alpha: 0.01
+      Gamma: 0.8
+      Init_epsilon: 1.0
+      Final_epsilon: 0.01
+      Exp_fraction: 0.99
+
 

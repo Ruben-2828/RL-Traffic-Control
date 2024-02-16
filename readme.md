@@ -44,7 +44,7 @@ The following tools were used in this project:
 
 ## Codebase
 
-[Placeholder for codebase description]
+
 
 ## Study
 
