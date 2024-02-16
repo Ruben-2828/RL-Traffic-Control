@@ -90,7 +90,7 @@ class DQNAgent(LearningAgent):
         """
         Loads an agent from a file
         :param path: path to load the trained agent from
-        :param env: new environment to run the loaded agent on
+        :param env: new custom to run the loaded agent on
         """
         self.env = env
         self.agent = DQN.load(path, env=env)

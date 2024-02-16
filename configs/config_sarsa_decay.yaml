@@ -1,11 +1,11 @@
 Plotter_settings:
-  Output: 'output/plots/sarsa'
+  Output: 'output/plots/sarsa_decay'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
-  Output_csv: 'output/csv/sarsa'
+  Output_csv: 'output/csv/sarsa_decay'
   Output_model: 'output/models'
   Environment:
     Traffic_type: 'low'
@@ -16,20 +16,22 @@ Agent_settings:
     Yellow_time: 2
     Delta_time: 5
   Instances:
-    SARSA_run_1:
-      Agent_type: 'SARSA'
+    SARSA_decay_run_1:
+      Agent_type: 'SARSA_decay'
       Runs: 1
       Alpha: 0.00005
       Gamma: 0.9
       Epsilon: 0.01
+      Decay: 0.99
       FourierOrder: 2
       Lambda: 0.999
-    SARSA_run_2:
-      Agent_type: 'SARSA'
+    SARSA_decay_run_2:
+      Agent_type: 'SARSA_decay'
       Runs: 1
       Alpha: 0.00001
       Gamma: 0.9
       Epsilon: 0.01
+      Decay: 0.99
       FourierOrder: 2
       Lambda: 0.999
 

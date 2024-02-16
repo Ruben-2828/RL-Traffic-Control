@@ -35,7 +35,7 @@ class CustomEnvironment:
 
     def get_sumo_env(self, fixed: bool) -> SumoEnvironment:
         """
-        Get the sumo environment
+        Get the sumo custom
         :param fixed: True for fixed cycle, False for learning agent
         :return: Corresponding SumoEnvironment
         """

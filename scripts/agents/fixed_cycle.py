@@ -53,13 +53,13 @@ class FixedCycleAgent(LearningAgent):
         """
         Loads an agent from a file
         :param path: path to load the trained agent from
-        :param env: new environment to run the loaded agent on
+        :param env: new custom to run the loaded agent on
         """
         pass
 
     def _step(self) -> bool:
         """
-        Perform one step of the environment
+        Perform one step of the custom
         :return: bool, whether the simulation has terminated
         """
         for _ in range(self.env.delta_time):

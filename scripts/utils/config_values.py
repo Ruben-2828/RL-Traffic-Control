@@ -14,7 +14,8 @@ AgentType = frozenset({
     'FIXED',
     'QL',
     'DQN',
-    'SARSA'
+    'SARSA',
+    'SARSA_decay'
 })
 
 # Possible traffic types to train/test models with

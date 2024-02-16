@@ -2,12 +2,12 @@ import os
 import pickle
 
 from sumo_rl import SumoEnvironment
-from linear_rl.true_online_sarsa import TrueOnlineSarsaLambda
+from scripts.custom.custom_true_online_sarsa import TrueOnlineSarsaLambdaDecay
 from scripts.agents.learning_agent import LearningAgent
 
 
-class SarsaAgent(LearningAgent):
-    
+class SarsaDecayAgent(LearningAgent):
+
     def __init__(self, config: dict, env: SumoEnvironment, name: str):
         """
         SARSA-Learning Agent constructor
@@ -21,12 +21,13 @@ class SarsaAgent(LearningAgent):
         """
         Initialize the agent object using self.config
         """
-        self.agent = TrueOnlineSarsaLambda(
+        self.agent = TrueOnlineSarsaLambdaDecay(
             state_space=self.env.observation_space,
             action_space=self.env.action_space,
             alpha=self.config['Alpha'],
             gamma=self.config['Gamma'],
             epsilon=self.config['Epsilon'],
+            decay=self.config['Decay'],
             fourier_order=self.config['FourierOrder'],
             lamb=self.config['Lambda']
         )
@@ -47,7 +48,7 @@ class SarsaAgent(LearningAgent):
         for curr_run in range(self.config['Runs']):
             obs, _ = self.env.reset()
             terminated, truncated = False, False
-            
+
             while not (terminated or truncated):
                 action = self.agent.act(obs)
                 next_obs, reward, terminated, truncated, _ = self.env.step(action=action)
@@ -70,6 +71,7 @@ class SarsaAgent(LearningAgent):
             'alpha': self.agent.alpha,
             'gamma': self.agent.gamma,
             'epsilon': self.agent.epsilon,
+            'decay': self.agent.decay,
             'lamb': self.agent.lamb,
             'fourier_order': self.agent.basis.order,
         }
@@ -88,12 +90,13 @@ class SarsaAgent(LearningAgent):
 
         self.env = env
 
-        self.agent = TrueOnlineSarsaLambda(
+        self.agent = TrueOnlineSarsaLambdaDecay(
             state_space=self.env.observation_space,
             action_space=self.env.action_space,
             alpha=data['alpha'],
             gamma=data['gamma'],
             epsilon=data['epsilon'],
+            decay=data['decay'],
             fourier_order=data['fourier_order'],
             lamb=data['lamb']
         )

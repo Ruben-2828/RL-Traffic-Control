@@ -5,11 +5,13 @@ from scripts.agents.dqn_agent import DQNAgent
 from scripts.agents.fixed_cycle import FixedCycleAgent
 from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
-from scripts.environment.custom_environment import CustomEnvironment
-from scripts.utils.config_values import AgentType
+from scripts.agents.sarsa_agent import SarsaAgent
+from scripts.agents.sarsa_decay_agent import SarsaDecayAgent
+
+from scripts.custom.custom_environment import CustomEnvironment
 from scripts.utils.plotter import Plotter
 
-from scripts.agents.sarsa_agent import SarsaAgent
+
 
 
 class Runner:
@@ -32,7 +34,7 @@ class Runner:
 
     def _set_environment(self) -> None:
         """
-        environment setter, sets up environment from configs
+        custom setter, sets up custom from configs
         """
         env_config = self.configs['Environment']
         route_file = None
@@ -123,6 +125,12 @@ class Runner:
                     agent.load(config['Model'], self.env.get_sumo_env(False))
                 else:
                     agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
+            if config['Agent_type'] == 'SARSA_decay':
+                if 'Model' in config:
+                    agent = SarsaDecayAgent(config, self.env.get_sumo_env(False), name)
+                    agent.load(config['Model'], self.env.get_sumo_env(False))
+                else:
+                    agent = SarsaDecayAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'FIXED':
                 agent = FixedCycleAgent(config, self.env.get_sumo_env(True), name)
             self.agents.append(agent)

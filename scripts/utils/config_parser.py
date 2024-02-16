@@ -101,13 +101,15 @@ class ConfigsParser:
                 return self._check_dqn(instance)
             if instance['Agent_type'] == 'SARSA':
                 return self._check_sarsa(instance)
+            if instance['Agent_type'] == 'SARSA_decay':
+                return self._check_sarsa_decay(instance)
             if instance['Agent_type'] == 'FIXED':
                 return self._check_fixed(instance)
         return False
 
     def _check_environment(self, config: dict) -> bool:
         """
-        Checks if config represents a valid environment
+        Checks if config represents a valid custom
         :param config: dict representing the config
         :return: True if valid, False otherwise
         """
@@ -238,6 +240,41 @@ class ConfigsParser:
             if 'FourierOrder' not in config:
                 return False
             if 'Lambda' not in config:
+                return False
+
+        return True
+
+    def _check_sarsa_decay(self, config: dict) -> bool:
+        """
+        Checks if config represents a valid SARSA agent
+        :param config: dict representing the config
+        :return: True if valid, False otherwise
+        """
+
+        if 'Runs' not in config:
+            return False
+        if config['Runs'] <= 0:
+            return False
+        if 'Model' not in config:
+            if 'Alpha' not in config:
+                return False
+            if not (0 < config['Alpha'] <= 1):
+                return False
+            if 'Gamma' not in config:
+                return False
+            if not (0 <= config['Gamma'] <= 1):
+                return False
+            if 'Epsilon' not in config:
+                return False
+            if not (0 <= config['Epsilon'] <= 1):
+                return False
+            if 'FourierOrder' not in config:
+                return False
+            if 'Lambda' not in config:
+                return False
+            if 'Decay' not in config:
+                return False
+            if not (0 <= config['Decay'] <= 1):
                 return False
 
         return True

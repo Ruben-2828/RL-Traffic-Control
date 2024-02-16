@@ -80,7 +80,7 @@ class QLearningAgent(LearningAgent):
         """
         Loads an agent from a file
         :param path: path to load the trained agent from
-        :param env: new environment to run the loaded agent on
+        :param env: new custom to run the loaded agent on
         """
         with open(path, 'rb') as f:
             data = pickle.load(f)
