@@ -11,8 +11,6 @@ from scripts.custom.custom_environment import CustomEnvironment
 from scripts.utils.plotter import Plotter
 
 
-
-
 class Runner:
     """
     Runner class that allows to run multiple tests on agents with different configurations
@@ -71,9 +69,13 @@ class Runner:
             csvs_path = agent.run(self.learn, output_path)
             output_csvs_paths[agent.get_name()] = csvs_path
 
+        print("Plotting agents")
         self._plot_per_agent(output_csvs_paths)
         self._plot_last_episode(output_csvs_paths)
-        self._save_agents_to_file()
+
+        if self.learn:
+            print("Saving models")
+            self._save_agents_to_file()
 
     def _plot_per_agent(self, csvs_paths: dict[str, str]) -> None:
         """
