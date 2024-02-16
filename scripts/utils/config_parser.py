@@ -222,22 +222,23 @@ class ConfigsParser:
             return False
         if config['Runs'] <= 0:
             return False
-        if 'Alpha' not in config:
-            return False
-        if not (0 < config['Alpha'] <= 1):
-            return False
-        if 'Gamma' not in config:
-            return False
-        if not (0 <= config['Gamma'] <= 1):
-            return False
-        if 'Epsilon' not in config:
-            return False
-        if not (0 <= config['Epsilon'] <= 1):
-            return False
-        if 'FourierOrder' not in config:
-            return False
-        if 'Lambda' not in config:
-            return False
+        if 'Model' not in config:
+            if 'Alpha' not in config:
+                return False
+            if not (0 < config['Alpha'] <= 1):
+                return False
+            if 'Gamma' not in config:
+                return False
+            if not (0 <= config['Gamma'] <= 1):
+                return False
+            if 'Epsilon' not in config:
+                return False
+            if not (0 <= config['Epsilon'] <= 1):
+                return False
+            if 'FourierOrder' not in config:
+                return False
+            if 'Lambda' not in config:
+                return False
 
         return True
 

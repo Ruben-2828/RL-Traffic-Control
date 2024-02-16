@@ -1,5 +1,5 @@
 Plotter_settings:
-  Output: 'output/plots/test_plotter'
+  Output: 'output/plots/mt-ht'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
@@ -8,22 +8,31 @@ Agent_settings:
   Output_csv: 'output/csv/test'
   Output_model : 'output/models'
   Environment:
-    Traffic_type: 'low'
+    Traffic_type: 'high'
     Gui: False
-    Num_seconds: 100
+    Num_seconds: 2000
     Min_green: 5
     Max_green: 50
     Yellow_time: 2
     Delta_time: 5
   Instances:
-    Fixed_run:
-      Agent_type: 'FIXED'
+    SARSA_run_1:
+      Agent_type: 'SARSA'
       Runs: 1
-    QL_run:
-      Agent_type: 'QL'
-      Runs: 5
-      Model: 'output/models/QL_run.pkl'
-    DQN_run:
-      Agent_type: 'DQN'
-      Runs: 5
-      Model: 'output/models/DQN_run.pkl'
+      Model: 'output/models/SARSA_run_1.pkl'
+    SARSA_run_2:
+      Agent_type: 'SARSA'
+      Runs: 1
+      Model: 'output/models/SARSA_run_2.pkl'
+    #Fixed_run:
+    #  Agent_type: 'FIXED'
+    #  Runs: 1
+#    QL_run:
+#      Agent_type: 'QL'
+#      Runs: 5
+#      Model: 'output/models/QL_run.pkl'
+    #DQN_run:
+    #  Agent_type: 'DQN'
+    #  Runs: 5
+    #  Model: 'output/models/DQN_run.pkl'
+

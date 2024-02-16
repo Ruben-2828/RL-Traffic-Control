@@ -1,4 +1,5 @@
 import os
+import pickle
 
 from sumo_rl import SumoEnvironment
 from linear_rl.true_online_sarsa import TrueOnlineSarsaLambda
@@ -65,7 +66,16 @@ class SarsaAgent(LearningAgent):
         Saves the trained agent to a file
         :param path: path to save the trained agent to
         """
-        pass
+        data = {
+            'alpha': self.agent.alpha,
+            'gamma': self.agent.gamma,
+            'epsilon': self.agent.epsilon,
+            'lamb': self.agent.lamb,
+            'fourier_order': self.agent.basis.order,
+        }
+
+        with open(path, 'wb') as f:
+            pickle.dump(data, f)
 
     def load(self, path: str, env: SumoEnvironment) -> None:
         """
@@ -73,4 +83,17 @@ class SarsaAgent(LearningAgent):
         :param path: path to load the trained agent from
         :param env: new environment to run the loaded agent on
         """
-        pass
+        with open(path, 'rb') as f:
+            data = pickle.load(f)
+
+        self.env = env
+
+        self.agent = TrueOnlineSarsaLambda(
+            state_space=self.env.observation_space,
+            action_space=self.env.action_space,
+            alpha=data['alpha'],
+            gamma=data['gamma'],
+            epsilon=data['epsilon'],
+            fourier_order=data['fourier_order'],
+            lamb=data['lamb']
+        )

@@ -118,7 +118,11 @@ class Runner:
                 else:
                     agent = DQNAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'SARSA':
-                agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
+                if 'Model' in config:
+                    agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
+                    agent.load(config['Model'], self.env.get_sumo_env(False))
+                else:
+                    agent = SarsaAgent(config, self.env.get_sumo_env(False), name)
             if config['Agent_type'] == 'FIXED':
                 agent = FixedCycleAgent(config, self.env.get_sumo_env(True), name)
             self.agents.append(agent)

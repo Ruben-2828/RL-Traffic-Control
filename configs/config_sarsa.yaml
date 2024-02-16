@@ -5,9 +5,10 @@ Plotter_settings:
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
-  Output: 'output/csv/sarsa'
+  Output_csv: 'output/csv/sarsa'
+  Output_model: 'output/models'
   Environment:
-    Traffic_type: 'low'
+    Traffic_type: 'medium'
     Gui: False
     Num_seconds: 10000
     Min_green: 5
@@ -21,7 +22,7 @@ Agent_settings:
       Alpha: 0.00005
       Gamma: 0.9
       Epsilon: 0.1
-      FourierOrder: 12
+      FourierOrder: 7
       Lambda: 0.999
     SARSA_run_2:
       Agent_type: 'SARSA'
@@ -29,23 +30,7 @@ Agent_settings:
       Alpha: 0.00001
       Gamma: 0.9
       Epsilon: 0.01
-      FourierOrder: 10
-      Lambda: 0.999
-    SARSA_run_3:
-      Agent_type: 'SARSA'
-      Runs: 1
-      Alpha: 0.00001
-      Gamma: 0.75
-      Epsilon: 0.01
-      FourierOrder: 12
-      Lambda: 0.999
-    SARSA_run_4:
-      Agent_type: 'SARSA'
-      Runs: 1
-      Alpha: 0.00001
-      Gamma: 0.75
-      Epsilon: 0.01
-      FourierOrder: 10
+      FourierOrder: 7
       Lambda: 0.999
 
 
