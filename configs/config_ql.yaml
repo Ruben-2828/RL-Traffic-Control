@@ -1,16 +1,16 @@
 Plotter_settings:
-  Output: 'output/plots/test_low'
+  Output: 'output/plots/training_low'
   Width: 3840
   Height: 1080
   Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
 
 Agent_settings:
   Output_csv: 'output/csv/ql'
-  Output_model: 'output/models'
+  Output_model: 'output/models/low'
   Environment:
     Traffic_type: 'low'
     Gui: False
-    Num_seconds: 10000
+    Num_seconds: 5000
     Min_green: 5
     Max_green: 50
     Yellow_time: 2
@@ -18,18 +18,20 @@ Agent_settings:
   Instances:
     QL_run_1:
       Agent_type: 'QL'
-      Runs: 2
-      Alpha: 0.1
-      Gamma: 0.99
-      Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.99
-    QL_run_2:
-      Agent_type: 'QL'
-      Runs: 2
-      Alpha: 0.01
+      Runs: 1
+      Alpha: 0.3
       Gamma: 0.75
       Init_epsilon: 1.0
-      Min_epsilon: 0.01
-      Decay: 0.9995
+      Min_epsilon: 0.1
+      Decay: 0.8
+    QL_run_2:
+      Agent_type: 'QL'
+      Runs: 1
+      Alpha: 0.35
+      Gamma: 0.8
+      Init_epsilon: 1.0
+      Min_epsilon: 0.1
+      Decay: 0.8
+
+
 
