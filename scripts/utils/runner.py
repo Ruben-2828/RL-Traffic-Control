@@ -6,7 +6,7 @@ from scripts.agents.fixed_cycle import FixedCycleAgent
 from scripts.agents.learning_agent import LearningAgent
 from scripts.agents.ql_agent import QLearningAgent
 from scripts.agents.sarsa_agent import SarsaAgent
-from scripts.agents.sarsa_decay_agent import SarsaDecayAgent
+from scripts.agents.sarsa_agent_decay import SarsaDecayAgent
 
 from scripts.custom.custom_environment import CustomEnvironment
 from scripts.utils.plotter import Plotter
