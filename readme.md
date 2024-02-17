@@ -137,30 +137,36 @@ VSCode from [Visual Studio Code website](https://code.visualstudio.com/).
    ```
    pip install pandas 
    ```
+
 9. **Install os:** You can install OS using pip:
-    ```
+   ```
    pip install os 
    ```
+
 10. **Install pickle :** You can install Pickle using pip:
-     ```
+    ```
     pip install pickle 
     ```
-11. **Install yaml:** You can install Yaml using pip:
+
+1. **Install yaml:** You can install Yaml using pip:
    ```
    pip install PyYAML 
    ```
-12. **Install abc:** You can install Abc using pip:
+
+2. **Install abc:** You can install Abc using pip:
    ```
    pip install abc 
    ```
-13. **Install other packages:** Use pip to install additional Python packages required for your project.
+
+3. **Install other packages:** Use pip to install additional Python packages required for your project.
    ```
    pip install *other_packages* 
    ```
-14. **Install linear-rl** You can install the linear-rl repository by Lucas Alegre needed for Sarsa using pip:
-    ```
+
+4. **Install linear-rl** You can install the linear-rl repository by Lucas Alegre needed for Sarsa using pip:
+   ```
     pip install  git+https://github.com/LucasAlegre/linear-rl
-    ```
+   ```
 
 If you're using PyCharm, after following these simple steps, everything should be ready to go! 
 
