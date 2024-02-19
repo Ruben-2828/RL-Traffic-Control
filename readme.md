@@ -206,14 +206,15 @@ training sessions, all made in YAML format:
   management domain.
 
 - **scripts**: The heart of the project, this directory harbors all Python scripts necessary for execution:
-  - **agents**: Includes Python files that define how different reinforcement learning algorithms behave:
+  - **agents**: Includes Python files that define how different reinforcement learning algorithms behave. Agent 
+  configurations are taken from the .yaml files in the configs folder.
     - `dqn_agent.py`: Implementation of the Deep Q-Network (DQN) agent, adept at handling complex decision-making tasks 
     through deep neural networks.
     - `ql_agent.py`: Implementation of the Q-Learning (QL) agent, leveraging tabular methods to learn optimal policies
     in dynamic environments.
     - `fixed_cycle.py`: Implementation of a fixed cycle strategy, providing a stable reference point for evaluating the 
     performance of dynamic algorithms.
-    - `learning_agent.py`: A file containing abstracts methods and utilities inherited by all other
+    - `learning_agent.py`: Abstract class containing the key methods and utilities inherited by all other
     reinforcement learning algorithms
     - `sarsa_agent.py`: Implementation of the State-Action-Reward-State-Action (SARSA) algorithm, facilitating 
     temporal difference learning with on-policy updates.
@@ -221,19 +222,106 @@ training sessions, all made in YAML format:
     exploration and exploitation during learning.
   - **custom**: Holds special wrapper files customized to work better with SUMO-RL integration.
     - `custom_environment.py`: A wrapper providing enhanced functionality and abstraction for interfacing with 
-    the SUMO environment
+    the SUMO environment. Created specially to better handle fixed cycle agents.
     - `custom_true_online_sarsa.py`: A specialized wrapper facilitating the implementation of SARSA with decay.
   - **utils**: Contains essential utility scripts that ensure the project runs without any hitches:
     - `config_parser.py`: A robust parser for configuration files, enabling seamless extraction and utilization of 
-    algorithmic parameters.
-    - `config_values.py`: A comprehensive collection of possible values and configurations, 
-    ensuring consistency and reliability across different setups.
-    - `plotter.py`: An essential tool for generating insightful plots and visualizations, 
-    aiding in the analysis and interpretation of experimental results.
+    algorithmic parameters. It checks config files format using values specified in `config_values.py`.
+    - `config_values.py`: A comprehensive collection of possible values and configurations.
+    - `plotter.py`: An essential tool for data visualization, aiding in the analysis and interpretation of experimental
+    results.
     - `runner.py`: A script orchestrating the execution of the project, managing training sessions, testing phases,
     and result generation with ease and efficiency.
   
-- `main.py`: The central execution file of the project
+- `main.py`: The central execution file of the project.
+
+## Configuration format
+
+All .yaml file within the directory `configs` must adhere to the following format.
+```
+Plotter_settings:
+  Output: 'path/to/output'  # directory in which to save the plots
+  Width: 3840   # Width in pixel of final image. Optional field
+  Height: 1080  # Height in pixel of final image. Optional field
+  Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed'] # Metrics to be plotted
+
+Agent_settings:
+  Output_csv: 'path/to/csv'         # Directory in which csvs are saved
+  Output_model: 'path/to/models'    # Directory in which models are saved
+  Environment:                      # Section dedicated to the environment
+    Traffic_type: type of traffic, possible values: 'low' or 'high'
+    Gui: whether or not to render GUI, possible values: True, False
+    Num_seconds: seconds to run the simulation for
+    Min_green: minimum green phase duration
+    Max_green: maximum green phase duration
+    Yellow_time: yellow phase duration
+    Delta_time: time elasped during a step
+  Instances:                        # Section where to insert agents
+    Agent_1:                        # Agent config format is shown in the section below
+      ...
+    Agent_2:
+      ...
+    ...
+    Agent_n:
+      ...
+```
+Possible agents configurations:
+- Fixed agent configuration:
+```
+Fixed_run:
+  Agent_type: 'FIXED'
+  Runs: number of runs
+```
+- Q-Learning agent configuration:
+```
+QL_run_1: 
+  Agent_type: 'QL'
+  Runs: number of runs
+  Alpha: alpha value
+  Gamma: gamma value
+  Init_epsilon: initial epsilon value
+  Min_epsilon: minimum epsilon value
+  Decay: decay value
+```
+- DQN agent configuration:
+```
+DQN_run_1:
+  Agent_type: 'DQN'
+  Runs: number of runs
+  Alpha: alpha value
+  Gamma: gamma value
+  Init_epsilon: initial epsilon value
+  Final_epsilon: final epsilon value
+  Exp_fraction: exploration fraction value
+```
+- SARSA agent configuration:
+```
+SARSA_run_1:
+  Agent_type: 'SARSA'
+  Runs: number of runs
+  Alpha: alpha value
+  Gamma: gamma value
+  Epsilon: epsilon value
+  FourierOrder: fourier order value
+  Lambda: lambda value
+```
+- SARSA with decay agent configuration:
+```
+SARSA_decay_run_1:
+  Agent_type: 'SARSA_decay'
+  Runs: number of runs
+  Alpha: alpha value
+  Gamma: gamma value
+  Epsilon: epsilon value
+  FourierOrder: fourier order value
+  Lambda: lambda value
+  Decay: decay vaue
+```
+To load trained models from file specify the following field in the agent config. If specified, only _Agent_type_ and 
+_Runs_ are mandatory in the agent config.
+```
+Model: 'path/to/saved/agent'
+```
 
 ## Study
 
