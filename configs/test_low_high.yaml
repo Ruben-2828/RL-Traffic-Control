@@ -1,0 +1,45 @@
+Plotter_settings:
+  Output: 'output/plots/test_low_high'
+  Width: 3840
+  Height: 1080
+  Metrics: ['system_total_stopped','system_total_waiting_time','system_mean_waiting_time','system_mean_speed']
+
+Agent_settings:
+  Output_csv: 'output/csv/test_low_high'
+  Output_model: 'output/models/test_low_high'
+  Environment:
+    Traffic_type: 'high'
+    Gui: False
+    Num_seconds: 20000
+    Min_green: 5
+    Max_green: 50
+    Yellow_time: 2
+    Delta_time: 5
+  Instances:
+    Fixed_run:
+      Agent_type: 'FIXED'
+      Runs: 1
+    QL_run_1:
+      Agent_type: 'QL'
+      Runs: 1
+      Model: 'output/models/learning_low/QL_run_1.pkl'
+    QL_run_2:
+      Agent_type: 'QL'
+      Runs: 1
+      Model: 'output/models/learning_low/QL_run_2.pkl'
+    DQN_run_1:
+      Agent_type: 'DQN'
+      Runs: 1
+      Model: 'output/models/learning_low/DQN_run_1.pkl'
+    DQN_run_2:
+      Agent_type: 'DQN'
+      Runs: 1
+      Model: 'output/models/learning_low/DQN_run_2.pkl'
+    SARSA_run_1:
+      Agent_type: 'SARSA'
+      Runs: 1
+      Model: 'output/models/learning_low/SARSA_run_1.pkl'
+    SARSA_decay_run_1:
+      Agent_type: 'SARSA_decay'
+      Runs: 1
+      Model: 'output/models/learning_low/SARSA_decay_run_1.pkl'
