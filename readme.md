@@ -182,16 +182,12 @@ The same should apply for VSCode!
 
 - **configs**: Here, you'll find configuration files for different reinforcement learning algorithms used during 
 training sessions, all made in YAML format:
-  - `config_dqn.yaml`:  Contains configurations for the Deep Q-Network (DQN) algorithm, known for handling complex tasks
-  - `config_ql.yaml`: Holds configurations for Q-Learning (QL), a straightforward but effective algorithmic approach. 
-  - `config_fixed.yaml`: This file defines parameters for a fixed cycle strategy, used as a stable reference for 
-  comparison. 
-  - `config_sarsa.yaml`: Stores configurations for the SARSA algorithm, which focuses on temporal difference 
-  learning with on-policy updates. 
-  - `config_sarsa_decay.yaml`: Contains configurations for SARSA with epsilon-greedy exploration, 
-  balancing exploration and exploitation. 
-  - `test.yaml`: Consolidates configurations for the final testing phase, ensuring smooth evaluation of
-  trained models.
+  - `learn_low.yaml`:  Config used to train models on low traffic
+  - `learn_high.yaml`:  Config used to train models on high traffic
+  - `test_low_low.yaml`:  Config used to test on low traffic the models trained in low traffic
+  - `test_low_high.yaml`:  Config used to test on high traffic the models trained in low traffic
+  - `test_high_low.yaml`:  Config used to test on low traffic the models trained in high traffic
+  - `test_high_high.yaml`:  Config used to test on high traffic the models trained in high traffic
 
 - **docs**: A repository of documentation and research materials essential for understanding and extending the 
   project:
@@ -268,13 +264,13 @@ Agent_settings:
 Possible agents configurations:
 - Fixed agent configuration:
 ```
-Fixed_run:
+Agent_name:
   Agent_type: 'FIXED'
   Runs: number of runs
 ```
 - Q-Learning agent configuration:
 ```
-QL_run_1: 
+Agent_name: 
   Agent_type: 'QL'
   Runs: number of runs
   Alpha: alpha value
@@ -285,7 +281,7 @@ QL_run_1:
 ```
 - DQN agent configuration:
 ```
-DQN_run_1:
+Agent_name:
   Agent_type: 'DQN'
   Runs: number of runs
   Alpha: alpha value
@@ -296,7 +292,7 @@ DQN_run_1:
 ```
 - SARSA agent configuration:
 ```
-SARSA_run_1:
+Agent_name:
   Agent_type: 'SARSA'
   Runs: number of runs
   Alpha: alpha value
@@ -307,7 +303,7 @@ SARSA_run_1:
 ```
 - SARSA with decay agent configuration:
 ```
-SARSA_decay_run_1:
+Agent_name:
   Agent_type: 'SARSA_decay'
   Runs: number of runs
   Alpha: alpha value
